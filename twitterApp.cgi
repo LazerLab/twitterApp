@@ -1,6 +1,5 @@
 #!/apps/python/2.7.13/bin/python
 
-
 import os
 import cgi
 import cgitb; cgitb.enable()
@@ -9,6 +8,10 @@ from requests_oauthlib import OAuth1Session
 import io
 import json
 import gzip
+import sys
+import subprocess #only needed to call twitter_dm
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 
 from topRetweets import *
@@ -19,7 +22,7 @@ form = cgi.FieldStorage()
 
 client_key = '0XjfIpYCYq9Ve2FLaO5MOVoEv'
 client_secret = '2ne1n8nqsCg6eN20RPg0Nbuyt83coyTSGYu6SahqKnPePd8XYF' 
-callback_uri = 'http://www.codewithaheart.com/authkeys/2authkey.cgi?action=step3'
+callback_uri = 'http://www.codewithaheart.com/twitterApp/twitterApp.cgi?action=step3'
 
 # Endpoints found in the OAuth provider API documentation
 request_token_url = 'https://api.twitter.com/oauth/request_token'
@@ -57,12 +60,11 @@ if action=='step3':
 	oauth_tokens = oauth.fetch_access_token(access_token_url)
 	resource_owner_key = oauth_tokens.get('oauth_token')
 	resource_owner_secret = oauth_tokens.get('oauth_token_secret')
- 	#print '<br> resource_owner_key: ' + resource_owner_key
-	#print '<br> resource_owner_secret: ' + resource_owner_secret
 
 # STEP 4: Access protected resources. OAuth1 access tokens typically do not expire and may be re-used until revoked by the user or yourself.
-	tweets_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json'
+	tweets_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json?count=3200'
 	credentials_url = 'https://api.twitter.com/1.1/account/verify_credentials.json'
+	settings_url = 'https://api.twitter.com/1.1/account/settings.json'
 
 	# Using OAuth1Session
 	oauth = OAuth1Session(client_key,
@@ -71,46 +73,88 @@ if action=='step3':
 			      resource_owner_secret=resource_owner_secret)
 	r = oauth.get(tweets_url)
 	c = oauth.get(credentials_url)
+	s = oauth.get(settings_url)
 
-	# retrieving screen name
-	credentials =  c.json()
-	screenName =  credentials["screen_name"]	
-	
+	# retrieving screen name and timezone
+	#credentials =  c.json()
+	#screenName =  credentials["screen_name"]	
+	settings =  s.json()
+        screenName =  settings["screen_name"]
+        tzinfo_name = settings["time_zone"]["tzinfo_name"] 
+
 	# saving keys to file:
-	keyToFile = open('/www/codewithaheart.com/docs/authkeys/keys/' + screenName + '.txt', 'a') 
-	keyToFile.write(screenName + ',' + resource_owner_key + ',' + resource_owner_secret + ',\n')
+	keyToFile = open('/www/codewithaheart.com/docs/twitterApp/kdata/' + screenName + '.txt', 'w') 
+	
+	# this will be used if collecting the data through oauth flow
+	#keyToFile.write(screenName + ',' + resource_owner_key + ',' + resource_owner_secret + '\n') 
+
+	# this will be used only if using the twitter_dm library to collect the data
+	keyToFile.write(client_key + ',' + client_secret + '\n' + screenName + ',' + resource_owner_key + ',' + resource_owner_secret + '\n') 
 
 # STEP 5: writes tweets to a json file and analyses results:
-
-	jsonFileName = '/www/codewithaheart.com/docs/authkeys/json/' + screenName + '.json.gz'
 	
+	# ---- TWITTER_DM ----
+	# this will be used only if using the twitter_dm library to collect the data
+	usernameToFile = open('/www/codewithaheart.com/docs/twitterApp/usernames/' + screenName + '.txt', 'w')
+	usernameToFile.write(screenName)
+	subprocess.Popen('python /home/thalita/twitter_dm/examples/collect_user_data_full.py kdata/' + screenName + '.txt usernames/' + screenName + '.txt twitter_dm_json/ n n y', shell=True)
+	jsonFileName = '/www/codewithaheart.com/docs/twitterApp/twitter_dm_json/json/' + screenName + '.json.gz'
+
+	# ---- OAUTH FLOW ----
+	# this will be used if collecting the data through oauth flow
+	#jsonFileName = '/www/codewithaheart.com/docs/twitterApp/json/' + screenName + '.json.gz'
+
 	with gzip.GzipFile(jsonFileName, 'w') as outfile:
 		for obj in r.json():
         		outfile.write(json.dumps(obj) + '\n')
 	
 	# analysing user's data
-	list_usersRetweeted = retweetedUser(jsonFileName)
+	total_count, tweet_count, retweet_count, reply_count, list_usersRetweeted, list_usersReplied, list_usersMentioned, list_hashtags, list_times = lists(jsonFileName, tzinfo_name) 
+
 	top5Retweeted = topFiveRetweeted(list_usersRetweeted)	
-	list_usersReplied = repliedUser(jsonFileName)
+	#print list_usersRetweeted
+	#print top5Retweeted
+
 	top5Replied = topFiveReplied(list_usersReplied)	
-	
+	#print list_usersReplied
+	#print top5Replied
+
+	mentions = top10Mentioned(list_usersMentioned)
+	#print mentions
+
+	hashtags = top10hashtags(list_hashtags)
+	#print hashtags
+
+	popularDay = getPopularWeekdays(list_times)
+	#print popularDay
+
+	popularHour = getPopularHours(list_times)
+	#print popularHour 
+
 	html = """
+	<!DOCTYPE html>
 	<html>
 	<head>
-	<link rel="stylesheet" type="text/css" href="/authkeys/style.css" />
+	<link rel="stylesheet" type="text/css" href="/twitterApp/style.css" />
+	<meta charset="utf-8">
 	</head>
 	<body>
+	<div dir="auto">
 	<br><br><br><br>
-	<h1> I've found some interesting data for @{screenName}... </h1>
-	<p><br><br>{top5Retweeted}
-	<br><br>
+	<h1> We've found some interesting data for @{screenName}... </h1>
+	<p> We analyzed {total_tweets} tweets, from which {retweet_count} were retweets, and {reply_count} were replies. 
+	<p>{top5Retweeted}
 	<p> {top5Replied}
+	<p> {mentions}
+	<p> {hashtags}
+	<p><br> {popularDay} is the day of the week you are most active. <br>On any given day, {popularHour} ({tzinfo_name} time) is your favorite time to tweet :) </p>
+	</div>
 	</body>
 	</html>
 	"""
 
-	html = html.format(screenName=screenName, top5Retweeted=top5Retweeted, top5Replied=top5Replied)
+	html = html.format(screenName=screenName, total_tweets=total_count, retweet_count=retweet_count, reply_count=reply_count, top5Retweeted=top5Retweeted, top5Replied=top5Replied, mentions=mentions, hashtags=hashtags, popularDay=popularDay, tzinfo_name=tzinfo_name, popularHour=popularHour)
 	print html
 
-	debugFile = open('/www/codewithaheart.com/docs/authkeys/debug/debug.txt', 'a') 
+	debugFile = open('/www/codewithaheart.com/docs/twitterApp/debug/debug.txt', 'a') 
 	debugFile.write(html + '\n\n\n\n\n')

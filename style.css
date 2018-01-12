@@ -1,0 +1,42 @@
+body {background-color: powderblue;
+    dir: "auto";
+    }
+h1 {
+    color: black;
+    font-family: Impact, Charcoal, sans-serif; 
+    font-size: 150%;
+    text-align: center;
+    font-weight: bold;
+}
+h2 {
+    color: black;
+    font-family: Impact, Charcoal, sans-serif;
+    font-size: 200%;
+    text-align: center;
+}
+p {
+    color: black;
+    font-family: "Lucida Grande", sans-serif;
+    font-size: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+div.sectionHeader { 
+    border: 0px solid black; 
+    width:400px; 
+    text-align: left;
+    color: black;
+    font-family: "Lucida Grande", sans-serif;
+    font-size: 100%;
+    font-weight: bold;
+}
+div.sectionBody { 
+    border: 0px solid black; 
+    width:400px; 
+    text-align: left;
+    color: black;
+    font-family: "Lucida Grande", sans-serif;
+    font-size: 100%;
+    font-weight: normal;
+    dir: "auto";
+}
