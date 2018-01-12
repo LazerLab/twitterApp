@@ -14,6 +14,8 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 
 
+
+
 from topRetweets import *
 
 print 'Content-type: text/html\n\n'
@@ -136,24 +138,130 @@ if action=='step3':
 	<html>
 	<head>
 	<link rel="stylesheet" type="text/css" href="/twitterApp/style.css" />
+		<link rel="stylesheet" type="text/css" href="/css/piechart.css">
+		<script src="/js/chartjs/Chart.bundle.js"></script>
+		<script src="/js/chartjs/utils.js"></script>
 	<meta charset="utf-8">
+	<script type="text/javascript">
+Chart.defaults.global.tooltips.custom = function(tooltip) {
+                // Tooltip Element
+                var tooltipEl = document.getElementById('chartjs-tooltip');
+
+                // Hide if no tooltip
+                if (tooltip.opacity === 0) {
+                        tooltipEl.style.opacity = 0;
+                        return;
+                }
+
+                // Set caret Position
+                tooltipEl.classList.remove('above', 'below', 'no-transform');
+                if (tooltip.yAlign) {
+                        tooltipEl.classList.add(tooltip.yAlign);
+                } else {
+                        tooltipEl.classList.add('no-transform');
+                }
+
+                function getBody(bodyItem) {
+                        return bodyItem.lines;
+                }
+
+                // Set Text
+                if (tooltip.body) {
+                        var titleLines = tooltip.title || [];
+                        var bodyLines = tooltip.body.map(getBody);
+
+                        var innerHtml = '<thead>';
+
+                        titleLines.forEach(function(title) {
+                                innerHtml += '<tr><th>' + title + '</th></tr>';
+                        });
+                        innerHtml += '</thead><tbody>';
+
+                        bodyLines.forEach(function(body, i) {
+                                var colors = tooltip.labelColors[i];
+                                var style = 'background:' + colors.backgroundColor;
+                                style += '; border-color:' + colors.borderColor;
+                                style += '; border-width: 2px';
+                                var span = '<span class="chartjs-tooltip-key" style="' + style + '"></span>';
+                                innerHtml += '<tr><td>' + span + body + '</td></tr>';
+                        });
+                        innerHtml += '</tbody>';
+
+                        var tableRoot = tooltipEl.querySelector('table');
+                        tableRoot.innerHTML = innerHtml;
+                }
+
+                var positionY = this._chart.canvas.offsetTop;
+                var positionX = this._chart.canvas.offsetLeft;
+
+                // Display, position, and set styles for font
+                tooltipEl.style.opacity = 1;
+                tooltipEl.style.left = positionX + tooltip.caretX + 'px';
+                tooltipEl.style.top = positionY + tooltip.caretY + 'px';
+                tooltipEl.style.fontFamily = tooltip._fontFamily;
+                tooltipEl.style.fontSize = tooltip.fontSize;
+                tooltipEl.style.fontStyle = tooltip._fontStyle;
+                tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
+        };
+
+        var config = {
+                type: 'pie',
+                data: {
+                        datasets: [{
+                                data: [%s, %s, %s],
+                                backgroundColor: [
+                                        window.chartColors.red,
+                                        window.chartColors.orange,
+                                        window.chartColors.yellow,
+                                        window.chartColors.green,
+                                        window.chartColors.blue,
+                                ],
+                        }],
+                        labels: [
+                                "Tweet",
+                                "Retweet",
+                                "Reply",
+                        ]
+                },
+                options: {
+                        responsive: true,
+                        legend: {
+                                display: true
+                        },
+                        tooltips: {
+                                enabled: false,
+                        }
+                }
+        };
+
+        window.onload = function() {
+                        var ctx = document.getElementById("chart-area").getContext("2d");
+                        window.myPie = new Chart(ctx, config);
+        };
+	</script>
 	</head>
 	<body>
 	<div dir="auto">
 	<br><br><br><br>
-	<h1> We've found some interesting data for @{screenName}... </h1>
-	<p> We analyzed {total_tweets} tweets, from which {retweet_count} were retweets, and {reply_count} were replies. 
-	<p>{top5Retweeted}
-	<p> {top5Replied}
-	<p> {mentions}
-	<p> {hashtags}
-	<p><br> {popularDay} is the day of the week you are most active. <br>On any given day, {popularHour} ({tzinfo_name} time) is your favorite time to tweet :) </p>
+	<h1> We've found some interesting data for @%s... </h1>
+	<p> We analyzed %s tweets, from which %s were retweets, and %s were replies. 
+	<div id="canvas-holder" style="width: 300px;" align="center">
+		<canvas id="chart-area" width="300" height="300"></canvas>
+		<div id="chartjs-tooltip">
+			<table></table>
+		</div>
+	</div>
+	<p> %s
+	<p> %s
+	<p> %s
+	<p> %s
+	<p><br> %s is the day of the week you are most active. <br>On any given day, %s (%s time) is your favorite time to tweet :) </p>
 	</div>
 	</body>
 	</html>
-	"""
+	""" % (tweet_count,retweet_count,reply_count,screenName,total_count,retweet_count,reply_count, top5Retweeted, top5Replied, mentions, hashtags, popularDay, popularHour, tzinfo_name)
 
-	html = html.format(screenName=screenName, total_tweets=total_count, retweet_count=retweet_count, reply_count=reply_count, top5Retweeted=top5Retweeted, top5Replied=top5Replied, mentions=mentions, hashtags=hashtags, popularDay=popularDay, tzinfo_name=tzinfo_name, popularHour=popularHour)
+#	html = html.format(screenName=screenName, total_tweets=total_count, retweet_count=retweet_count, reply_count=reply_count, top5Retweeted=top5Retweeted, top5Replied=top5Replied, mentions=mentions, hashtags=hashtags, popularDay=popularDay, tzinfo_name=tzinfo_name, popularHour=popularHour)
 	print html
 
 	debugFile = open('/www/codewithaheart.com/docs/twitterApp/debug/debug.txt', 'a') 
