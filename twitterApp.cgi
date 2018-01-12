@@ -245,12 +245,14 @@ Chart.defaults.global.tooltips.custom = function(tooltip) {
 	<br><br><br><br>
 	<h1> We've found some interesting data for @%s... </h1>
 	<p> We analyzed %s tweets, from which %s were retweets, and %s were replies. 
-	<div id="canvas-holder" style="width: 300px;" align="center">
+        <center>
+	<div id="canvas-holder" style="width: 300px;">
 		<canvas id="chart-area" width="300" height="300"></canvas>
 		<div id="chartjs-tooltip">
 			<table></table>
 		</div>
 	</div>
+        </center>
 	<p> %s
 	<p> %s
 	<p> %s
