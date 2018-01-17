@@ -100,17 +100,23 @@ def lists(jsonFileName, tzinfo_name):
 def topFiveRetweeted(list_users):
 	data = Counter(list_users)
 	counter = 1
-	#PLAYING WITH DIVS: 
-	mostCommon = ['<center><div class="sectionHeader"><br> Here are the people you retweet the most: <div class="sectionBody">']
+	mostCommon_screenName = []
+	mostCommon_value = []
 	for x in data.most_common(5):
-		if counter >= 1:
-			mostCommon.append('<br>' + str(counter) + '. ' + x[0])
-			counter += 1
-		else:
-			del mostCommon[:]
-			mostCommon.append( "<br> Well, it seems like you don't retweet a lot.")
+		mostCommon_screenName.append(x[0])
+		mostCommon_value.append(x[1])
+		counter += 1
+	if len(mostCommon_screenName) >= 1:
+		mostCommon = ['<center><div class="sectionHeader"><br> Here are the people you retweet the most: <div class="sectionBody">']
+		#for x in mostCommon_screenName:
+		#	mostCommon.append('<br>' + str(counter) + '. ' + x)
+	else:
+		mostCommon = ['<center><div class="sectionHeader"><br> Well, it seems like you don''t retweet a lot.']
 	mostCommon.append('</div>\n</div>\n</center>')
-	return ' '.join(mostCommon)
+	mostCommon_screenName += [' '] * (5 - len(mostCommon_screenName))
+	mostCommon_value += [0] * (5 - len(mostCommon_value))
+	return ' '.join(mostCommon), mostCommon_screenName, mostCommon_value
+
 
 
 #------------------------------
@@ -120,63 +126,68 @@ def topFiveRetweeted(list_users):
 def topFiveReplied(list_users):
 	data = Counter(list_users)
 	counter = 1
-	mostCommon = ['<center><div class="sectionHeader"><br> You frequently reply to: <div class="sectionBody"> ']
+	mostCommon_screenName = []
+	mostCommon_value = []
 	for x in data.most_common(5):
-		if counter >= 1:
-			mostCommon.append('<br>' + str(counter) + '. ' + x[0])
-			counter += 1
-		else:
-			del mostCommon[:]
-			mostCommon.append( "<br> Replying is not your thing. That's ok!")
+		mostCommon_screenName.append(x[0])
+		mostCommon_value.append(x[1])
+		counter += 1
+	if len(mostCommon_screenName) >= 1:
+		mostCommon = ['<center><div class="sectionHeader"><br> You frequently reply to: <div class="sectionBody"> ']
+		#for x in mostCommon_screenName:
+		#	mostCommon.append('<br>' + str(counter) + '. ' + x)
+	else:
+		mostCommon = ["<center><div class='sectionHeader'><br><br> Replying is not your thing. That''s ok!"]
 	mostCommon.append('</div>\n</div>\n</center>')
-	return ' '.join(mostCommon)
-
-def numberRetweets(list_users):
-	number = len(list_users)
-	return str(number)
-
+	mostCommon_screenName += [' '] * (5 - len(mostCommon_screenName))
+	mostCommon_value += [0] * (5 - len(mostCommon_value))
+	return ' '.join(mostCommon), mostCommon_screenName, mostCommon_value
 
 #------------------------------
-# topTenMentioned: returns the 10 screen names 
+# topMentioned: returns the 5 screen names 
 # of accounts the user mentions the most
 #------------------------------
-def top10Mentioned(list_users):
+def topFiveMentioned(list_users):
 	data = Counter(list_users)
 	counter = 1
-	mostCommon = ["<center><div class='sectionHeader'><br> We've got a list of people who you usually mention: <div class='sectionBody'>"]
-	for x in data.most_common(10):
-		if counter >= 1:
-			mostCommon.append('<br>' + str(counter) + '. ' + x[0])
-			counter += 1
-		else:
-			del mostCommon[:]
-			mostCommon.append( "<br> Mmm... we've found that you usually don't mention other users in your tweets. ")
+	mostCommon_screenName = []
+	mostCommon_value = []
+	for x in data.most_common(5):
+		mostCommon_screenName.append(x[0])
+		mostCommon_value.append(x[1])
+		counter += 1
+	if len(mostCommon_screenName) >= 1:
+		mostCommon = ["<center><div class='sectionHeader'><br> We've got a list of people who you usually mention: <div class='sectionBody'>"]
+	else:
+		mostCommon = [ "<center><div class='sectionHeader'><br><br> Mmm... we've found that you usually don't mention other users in your tweets."]
 	mostCommon.append('</div>\n</div>\n</center>')
-	return ' '.join(mostCommon)
-
-def numberRetweets(list_users):
-	number = len(list_users)
-	return str(number)
-
+	mostCommon_screenName += [' '] * (5 - len(mostCommon_screenName))
+	mostCommon_value += [0] * (5 - len(mostCommon_value))
+	return ' '.join(mostCommon), mostCommon_screenName, mostCommon_value
 
 
 #------------------------------
-# topTenHashtags: returns the 10 most common
+# topHashtags: returns the 5 most common
 # hashtags mentioned by the user
 #------------------------------
-def top10hashtags(list):
+def topFiveHashtags(list):
 	data = Counter(list)
 	counter = 1
-	mostCommon = ["<center><div class='sectionHeader'><br> And your top hashtags are... <div class='sectionBody'>"]
-	for x in data.most_common(10):
+	mostCommon_hashtag = []
+	mostCommon_value = []
+	for x in data.most_common(5):
 		if counter >= 1:
-			mostCommon.append('<br>' + str(counter) + '. ' + x[0])
+			mostCommon_hashtag.append(x[0])
+			mostCommon_value.append(x[1])
 			counter += 1
-		else:
-			del mostCommon[:]
-			mostCommon.append( "<br> We didn't find any hashtags in your posts")
+	if len(mostCommon_hashtag) >= 1:
+		mostCommon = ["<center><div class='sectionHeader'><br> And your top hashtags are... <div class='sectionBody'>"]
+	else:
+		mostCommon = [ "<center><div class='sectionHeader'><br><br> We didn't find any hashtags in your posts"]
 	mostCommon.append('</div>\n</div>\n</center>')
-	return ' '.join(mostCommon)
+	mostCommon_hashtag += [' '] * (5 - len(mostCommon_hashtag))
+	mostCommon_value += [0] * (5 - len(mostCommon_value))
+	return ' '.join(mostCommon), mostCommon_hashtag, mostCommon_value
 
 def numberRetweets(list_users):
 	number = len(list_users)
