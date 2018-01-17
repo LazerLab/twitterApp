@@ -1,6 +1,8 @@
 #!/apps/python/2.7.13/bin/python
 
 import os
+from os import listdir #only used for action=="testing"
+from os.path import isfile, join #only used for action=="testing"
 import cgi
 import cgitb; cgitb.enable()
 import requests
@@ -14,8 +16,7 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 
 
-
-
+from generateGraphs import *
 from topRetweets import *
 
 print 'Content-type: text/html\n\n'
@@ -82,7 +83,11 @@ if action=='step3':
 	#screenName =  credentials["screen_name"]	
 	settings =  s.json()
         screenName =  settings["screen_name"]
-        tzinfo_name = settings["time_zone"]["tzinfo_name"] 
+        if "time_zone" in settings:
+		tzinfo_name = settings["time_zone"]["tzinfo_name"] 
+	else:
+		tzinfo_name = 'UTC' 
+		
 
 	# saving keys to file:
 	keyToFile = open('/www/codewithaheart.com/docs/twitterApp/kdata/' + screenName + '.txt', 'w') 
@@ -93,7 +98,7 @@ if action=='step3':
 	# this will be used only if using the twitter_dm library to collect the data
 	keyToFile.write(client_key + ',' + client_secret + '\n' + screenName + ',' + resource_owner_key + ',' + resource_owner_secret + '\n') 
 
-# STEP 5: writes tweets to a json file and analyses results:
+# STEP 5: writes tweets to a json file:
 	
 	# ---- TWITTER_DM ----
 	# this will be used only if using the twitter_dm library to collect the data
@@ -110,161 +115,46 @@ if action=='step3':
 		for obj in r.json():
         		outfile.write(json.dumps(obj) + '\n')
 	
-	# analysing user's data
-	total_count, tweet_count, retweet_count, reply_count, list_usersRetweeted, list_usersReplied, list_usersMentioned, list_hashtags, list_times = lists(jsonFileName, tzinfo_name) 
 
-	top5Retweeted = topFiveRetweeted(list_usersRetweeted)	
-	#print list_usersRetweeted
-	#print top5Retweeted
+# STEP 6: analyses results and dysplays on webpage:
+	generateGraphs(screenName, jsonFileName, tzinfo_name)
 
-	top5Replied = topFiveReplied(list_usersReplied)	
-	#print list_usersReplied
-	#print top5Replied
 
-	mentions = top10Mentioned(list_usersMentioned)
-	#print mentions
+# ==================================================
+# 		- TESTING - 
+# ==================================================
 
-	hashtags = top10hashtags(list_hashtags)
-	#print hashtags
-
-	popularDay = getPopularWeekdays(list_times)
-	#print popularDay
-
-	popularHour = getPopularHours(list_times)
-	#print popularHour 
-
-	html = """
-	<!DOCTYPE html>
+if action == "testing":
+	print """
 	<html>
 	<head>
-	<link rel="stylesheet" type="text/css" href="/twitterApp/style.css" />
-		<link rel="stylesheet" type="text/css" href="/css/piechart.css">
-		<script src="/js/chartjs/Chart.bundle.js"></script>
-		<script src="/js/chartjs/utils.js"></script>
-	<meta charset="utf-8">
-	<script type="text/javascript">
-Chart.defaults.global.tooltips.custom = function(tooltip) {
-                // Tooltip Element
-                var tooltipEl = document.getElementById('chartjs-tooltip');
-
-                // Hide if no tooltip
-                if (tooltip.opacity === 0) {
-                        tooltipEl.style.opacity = 0;
-                        return;
-                }
-
-                // Set caret Position
-                tooltipEl.classList.remove('above', 'below', 'no-transform');
-                if (tooltip.yAlign) {
-                        tooltipEl.classList.add(tooltip.yAlign);
-                } else {
-                        tooltipEl.classList.add('no-transform');
-                }
-
-                function getBody(bodyItem) {
-                        return bodyItem.lines;
-                }
-
-                // Set Text
-                if (tooltip.body) {
-                        var titleLines = tooltip.title || [];
-                        var bodyLines = tooltip.body.map(getBody);
-
-                        var innerHtml = '<thead>';
-
-                        titleLines.forEach(function(title) {
-                                innerHtml += '<tr><th>' + title + '</th></tr>';
-                        });
-                        innerHtml += '</thead><tbody>';
-
-                        bodyLines.forEach(function(body, i) {
-                                var colors = tooltip.labelColors[i];
-                                var style = 'background:' + colors.backgroundColor;
-                                style += '; border-color:' + colors.borderColor;
-                                style += '; border-width: 2px';
-                                var span = '<span class="chartjs-tooltip-key" style="' + style + '"></span>';
-                                innerHtml += '<tr><td>' + span + body + '</td></tr>';
-                        });
-                        innerHtml += '</tbody>';
-
-                        var tableRoot = tooltipEl.querySelector('table');
-                        tableRoot.innerHTML = innerHtml;
-                }
-
-                var positionY = this._chart.canvas.offsetTop;
-                var positionX = this._chart.canvas.offsetLeft;
-
-                // Display, position, and set styles for font
-                tooltipEl.style.opacity = 1;
-                tooltipEl.style.left = positionX + tooltip.caretX + 'px';
-                tooltipEl.style.top = positionY + tooltip.caretY + 'px';
-                tooltipEl.style.fontFamily = tooltip._fontFamily;
-                tooltipEl.style.fontSize = tooltip.fontSize;
-                tooltipEl.style.fontStyle = tooltip._fontStyle;
-                tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
-        };
-
-        var config = {
-                type: 'pie',
-                data: {
-                        datasets: [{
-                                data: [%s, %s, %s],
-                                backgroundColor: [
-                                        window.chartColors.red,
-                                        window.chartColors.orange,
-                                        window.chartColors.yellow,
-                                        window.chartColors.green,
-                                        window.chartColors.blue,
-                                ],
-                        }],
-                        labels: [
-                                "Tweet",
-                                "Retweet",
-                                "Reply",
-                        ]
-                },
-                options: {
-                        responsive: true,
-                        legend: {
-                                display: true
-                        },
-                        tooltips: {
-                                enabled: false,
-                        }
-                }
-        };
-
-        window.onload = function() {
-                        var ctx = document.getElementById("chart-area").getContext("2d");
-                        window.myPie = new Chart(ctx, config);
-        };
-	</script>
 	</head>
 	<body>
-	<div dir="auto">
-	<br><br><br><br>
-	<h1> We've found some interesting data for @%s... </h1>
-	<p> We analyzed %s tweets, from which %s were retweets, and %s were replies. 
-        <center>
-	<div id="canvas-holder" style="width: 300px;">
-		<canvas id="chart-area" width="300" height="300"></canvas>
-		<div id="chartjs-tooltip">
-			<table></table>
-		</div>
-	</div>
-        </center>
-	<p> %s
-	<p> %s
-	<p> %s
-	<p> %s
-	<p><br> %s is the day of the week you are most active. <br>On any given day, %s (%s time) is your favorite time to tweet :) </p>
-	</div>
+	<p> This is a test
+	<form action="twitterApp.cgi" method="POST">
+	Select a json file to process:
+	<br><br> 
+	"""
+	jsonPath = "/www/codewithaheart.com/docs/test/json"
+	jsonFiles = [f for f in listdir(jsonPath) if isfile(join(jsonPath, f))]
+	for file in jsonFiles:
+		print '<br><input type="radio" name="jsonFile" value="' + file + '">' + file 
+
+	print """		
+	<input type="hidden" name="action" value="processTestFile"> 
+	<br>
+	<input type="submit" value="process file">
+	</form> 
 	</body>
 	</html>
-	""" % (tweet_count,retweet_count,reply_count,screenName,total_count,retweet_count,reply_count, top5Retweeted, top5Replied, mentions, hashtags, popularDay, popularHour, tzinfo_name)
+ 	"""
 
-#	html = html.format(screenName=screenName, total_tweets=total_count, retweet_count=retweet_count, reply_count=reply_count, top5Retweeted=top5Retweeted, top5Replied=top5Replied, mentions=mentions, hashtags=hashtags, popularDay=popularDay, tzinfo_name=tzinfo_name, popularHour=popularHour)
-	print html
-
-	debugFile = open('/www/codewithaheart.com/docs/twitterApp/debug/debug.txt', 'a') 
-	debugFile.write(html + '\n\n\n\n\n')
+if action == "processTestFile":
+	jsonPath = "/www/codewithaheart.com/docs/test/json"
+	screenName = str(form["jsonFile"].value).replace('.json.gz', '')
+	jsonFileName = jsonPath + "/" + str(form["jsonFile"].value)
+	
+	tzinfo_name = 'Europe/Oslo' 
+	
+	# analysing user's data
+	generateGraphs(screenName, jsonFileName, tzinfo_name)
