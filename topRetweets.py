@@ -107,12 +107,12 @@ def topFiveRetweeted(list_users):
 		mostCommon_value.append(x[1])
 		counter += 1
 	if len(mostCommon_screenName) >= 1:
-		mostCommon = ['<center><div class="sectionHeader"><br> Here are the people you retweet the most: <div class="sectionBody">']
+		mostCommon = ['<center><div class="section-header" style="position: relative; height:3vh; width: 80vw; border: 0px solid black"><br> Here are the people you retweet the most:']
 		#for x in mostCommon_screenName:
 		#	mostCommon.append('<br>' + str(counter) + '. ' + x)
 	else:
-		mostCommon = ['<center><div class="sectionHeader"><br> Well, it seems like you don''t retweet a lot.']
-	mostCommon.append('</div>\n</div>\n</center>')
+		mostCommon = ['<center><div class="section-header" style="position: relative; height:3vh; width: 80vw; border: 0px solid black"><br> Well, it seems like you don''t retweet a lot.']
+	mostCommon.append('</div>\n</center>')
 	mostCommon_screenName += [' '] * (5 - len(mostCommon_screenName))
 	mostCommon_value += [0] * (5 - len(mostCommon_value))
 	return ' '.join(mostCommon), mostCommon_screenName, mostCommon_value
@@ -133,11 +133,11 @@ def topFiveReplied(list_users):
 		mostCommon_value.append(x[1])
 		counter += 1
 	if len(mostCommon_screenName) >= 1:
-		mostCommon = ['<center><div class="sectionHeader"><br> You frequently reply to: <div class="sectionBody"> ']
+		mostCommon = ['<center><div class="section-header" style="position: relative; height:3vh; width: 80vw; border: 0px solid black"><br> You frequently reply to:']
 		#for x in mostCommon_screenName:
 		#	mostCommon.append('<br>' + str(counter) + '. ' + x)
 	else:
-		mostCommon = ["<center><div class='sectionHeader'><br><br> Replying is not your thing. That''s ok!"]
+		mostCommon = ['<center><div class="section-header" style="position: relative; height:3vh; width: 80vw; border: 0px solid black"><br> Replying is not your thing. That''s ok!']
 	mostCommon.append('</div>\n</div>\n</center>')
 	mostCommon_screenName += [' '] * (5 - len(mostCommon_screenName))
 	mostCommon_value += [0] * (5 - len(mostCommon_value))
@@ -157,10 +157,10 @@ def topFiveMentioned(list_users):
 		mostCommon_value.append(x[1])
 		counter += 1
 	if len(mostCommon_screenName) >= 1:
-		mostCommon = ["<center><div class='sectionHeader'><br> We've got a list of people who you usually mention: <div class='sectionBody'>"]
+		mostCommon = ['<center><div class="section-header" style="position: relative; height:5vh; width: 80vw; border: 0px solid black"><br> We''ve got a list of people who you usually mention:']
 	else:
-		mostCommon = [ "<center><div class='sectionHeader'><br><br> Mmm... we've found that you usually don't mention other users in your tweets."]
-	mostCommon.append('</div>\n</div>\n</center>')
+		mostCommon = ['<center><div class="section-header" style="position: relative; height:3vh; width: 80vw; border: 0px solid black"><br> Mmm... we''ve found that you usually don''t mention other users in your tweets.']
+	mostCommon.append('</div>\n</center>')
 	mostCommon_screenName += [' '] * (5 - len(mostCommon_screenName))
 	mostCommon_value += [0] * (5 - len(mostCommon_value))
 	return ' '.join(mostCommon), mostCommon_screenName, mostCommon_value
@@ -181,10 +181,10 @@ def topFiveHashtags(list):
 			mostCommon_value.append(x[1])
 			counter += 1
 	if len(mostCommon_hashtag) >= 1:
-		mostCommon = ["<center><div class='sectionHeader'><br> And your top hashtags are... <div class='sectionBody'>"]
+		mostCommon = ['<center><div class="section-header" style="position: relative; height:3vh; width: 80vw; border: 0px solid black"><br> And your top hashtags are...']
 	else:
-		mostCommon = [ "<center><div class='sectionHeader'><br><br> We didn't find any hashtags in your posts"]
-	mostCommon.append('</div>\n</div>\n</center>')
+		mostCommon = ['<center><div class="section-header" style="position: relative; height:3vh; width: 80vw; border: 0px solid black"><br> We didn''t find any hashtags in your posts']
+	mostCommon.append('</div>\n</center>')
 	mostCommon_hashtag += [' '] * (5 - len(mostCommon_hashtag))
 	mostCommon_value += [0] * (5 - len(mostCommon_value))
 	return ' '.join(mostCommon), mostCommon_hashtag, mostCommon_value
@@ -219,17 +219,147 @@ def getPopularWeekdays(times):
 # popularHour: returns the hour of the  day 
 # the user is more active on Twitter
 #------------------------------
+#def getPopularHours(times):
+#	hour = [11,12]  # the hour is the 11,12 elements in Mon Mar 28 15:59:45 +0000 2011
+#	hours = []
+#	hourFormat = {'01': '1 A.M.', '02': '2 A.M.', '03': '3 A.M.', '04': '4 A.M.', '05': '5 A.M.', '06': '6 A.M.', '07': '7 A.M.', '08': '8 A.M.', '09': '9 A.M.', '10': '10 A.M.', '11': '11 A.M.', '12': 'noon', '13': '1 P.M.', '14': '2 P.M.', '15': '3 P.M.', '16': '4 P.M.', '17': '5 P.M.', '18': '6 P.M.', '19': '7 P.M.', '20': '8 P.M.', '21': '9 P.M.', '22': '10 P.M.', '23': '11 P.M.', '00': 'midnight'} 
+	# appends the hours to the list
+#	for t in times:
+#        	hours.append(''.join(itemgetter(*hour)(t)))
+#
+#        popularHour =  str(max(set(hours), key=hours.count))
+#        popularHour = hourFormat[str(popularHour)]
+#        return popularHour
+
+
+#------------------------------
+# popularHour: returns the hour of the  day 
+# the user is more active on Twitter
+#------------------------------
 def getPopularHours(times):
 	hour = [11,12]  # the hour is the 11,12 elements in Mon Mar 28 15:59:45 +0000 2011
 	hours = []
 	hourFormat = {'01': '1 A.M.', '02': '2 A.M.', '03': '3 A.M.', '04': '4 A.M.', '05': '5 A.M.', '06': '6 A.M.', '07': '7 A.M.', '08': '8 A.M.', '09': '9 A.M.', '10': '10 A.M.', '11': '11 A.M.', '12': 'noon', '13': '1 P.M.', '14': '2 P.M.', '15': '3 P.M.', '16': '4 P.M.', '17': '5 P.M.', '18': '6 P.M.', '19': '7 P.M.', '20': '8 P.M.', '21': '9 P.M.', '22': '10 P.M.', '23': '11 P.M.', '00': 'midnight'} 
-	# appends the hours to the list
+	sundayMorning = []
+	sundayAfternoon = []
+	sundayEvening = []
+	sundayNight = []
+	mondayMorning = []
+	mondayAfternoon = []
+	mondayEvening = []
+	mondayNight = []
+	tuesdayMorning = []
+	tuesdayAfternoon = []
+	tuesdayEvening = []
+	tuesdayNight = []
+	wednesdayMorning = []
+	wednesdayAfternoon = []
+	wednesdayEvening = []
+	wednesdayNight = []
+	thursdayMorning = []
+	thursdayAfternoon = []
+	thursdayEvening = []
+	thursdayNight = []
+	fridayMorning = []
+	fridayAfternoon = []
+	fridayEvening = []
+	fridayNight = []
+	saturdayMorning = []
+	saturdayAfternoon = []
+	saturdayEvening = []
+	saturdayNight = []
+
 	for t in times:
+	# appends the hours to the list
         	hours.append(''.join(itemgetter(*hour)(t)))
+		time = ''.join(itemgetter(*hour)(t))
+
+	# appends hours to all the sunday lists. 	
+		if t[0] == 'S' and t[1] == 'u':  # identifies that the day of the week is Sunday	
+			if int(time) >= 06 and int(time) <= 11:
+				sundayMorning.append(time)
+			elif int(time) >= 12 and int(time) <= 17:
+				sundayAfternoon.append(time)
+			elif int(time) >= 18 and int(time) <= 23:
+				sundayEvening.append(time)
+			elif int(time) >= 00 and int(time) <= 05:
+				sundayNight.append(time)
+
+
+	# appends hours to all the monday lists. 	
+		if t[0] == 'M' and t[1] == 'o':  # identifies that the day of the week is Monday	
+			if int(time) >= 06 and int(time) <= 11:
+				mondayMorning.append(time)
+			elif int(time) >= 12 and int(time) <= 17:
+				mondayAfternoon.append(time)
+			elif int(time) >= 18 and int(time) <= 23:
+				mondayEvening.append(time)
+			elif int(time) >= 00 and int(time) <= 05:
+				mondayNight.append(time)
+
+
+	# appends hours to all the tuesday lists. 	
+		if t[0] == 'T' and t[1] == 'u':  # identifies that the day of the week is Tuesday	
+			if int(time) >= 06 and int(time) <= 11:
+				tuesdayMorning.append(time)
+			elif int(time) >= 12 and int(time) <= 17:
+				tuesdayAfternoon.append(time)
+			elif int(time) >= 18 and int(time) <= 23:
+				tuesdayEvening.append(time)
+			elif int(time) >= 00 and int(time) <= 05:
+				tuesdayNight.append(time)
+
+
+	# appends hours to all the wednesday lists. 	
+		if t[0] == 'W' and t[1] == 'e':  # identifies that the day of the week is Wednesday	
+			if int(time) >= 06 and int(time) <= 11:
+				wednesdayMorning.append(time)
+			elif int(time) >= 12 and int(time) <= 17:
+				wednesdayAfternoon.append(time)
+			elif int(time) >= 18 and int(time) <= 23:
+				wednesdayEvening.append(time)
+			elif int(time) >= 00 and int(time) <= 05:
+				wednesdayNight.append(time)
+
+
+	# appends hours to all the thursday lists. 	
+		if t[0] == 'T' and t[1] == 'h':  # identifies that the day of the week is Thursday	
+			if int(time) >= 06 and int(time) <= 11:
+				thursdayMorning.append(time)
+			elif int(time) >= 12 and int(time) <= 17:
+				thursdayAfternoon.append(time)
+			elif int(time) >= 18 and int(time) <= 23:
+				thursdayEvening.append(time)
+			elif int(time) >= 00 and int(time) <= 05:
+				thursdayNight.append(time)
+
+
+	# appends hours to all the friday lists. 	
+		if t[0] == 'F' and t[1] == 'r':  # identifies that the day of the week is Friday	
+			if int(time) >= 06 and int(time) <= 11:
+				fridayMorning.append(time)
+			elif int(time) >= 12 and int(time) <= 17:
+				fridayAfternoon.append(time)
+			elif int(time) >= 18 and int(time) <= 23:
+				fridayEvening.append(time)
+			elif int(time) >= 00 and int(time) <= 05:
+				fridayNight.append(time)
+
+
+	# appends hours to all the saturday lists. 	
+		if t[0] == 'S' and t[1] == 'a':  # identifies that the day of the week is Saturday	
+			if int(time) >= 06 and int(time) <= 11:
+				saturdayMorning.append(time)
+			elif int(time) >= 12 and int(time) <= 17:
+				saturdayAfternoon.append(time)
+			elif int(time) >= 18 and int(time) <= 23:
+				saturdayEvening.append(time)
+			elif int(time) >= 00 and int(time) <= 05:
+				saturdayNight.append(time)
+
 
         popularHour =  str(max(set(hours), key=hours.count))
         popularHour = hourFormat[str(popularHour)]
-        return popularHour
 
-
+	return len(sundayMorning), len(sundayAfternoon), len(sundayEvening), len(sundayNight), len(mondayMorning), len(mondayAfternoon), len(mondayEvening), len(mondayNight), len(tuesdayMorning), len(tuesdayAfternoon), len(tuesdayEvening), len(tuesdayNight), len(wednesdayMorning), len(wednesdayAfternoon), len(wednesdayEvening), len(wednesdayNight), len(thursdayMorning), len(thursdayAfternoon), len(thursdayEvening), len(thursdayNight), len(fridayMorning), len(fridayAfternoon), len(fridayEvening), len(fridayNight), len(saturdayMorning), len(saturdayAfternoon), len(saturdayEvening), len(saturdayNight), popularHour
 

@@ -19,31 +19,19 @@ from topRetweets import *
 
 
 def generateGraphs(screenName, jsonFileName, tzinfo_name):
-	# analysing user's data
+	# call functions that contains user's data
 	total_count, tweet_count, retweet_count, reply_count, list_usersRetweeted, list_usersReplied, list_usersMentioned, list_hashtags, list_times = lists(jsonFileName, tzinfo_name) 
 
 	top5Retweeted, mostCommonRetweeted, mostCommonRetweetedValue = topFiveRetweeted(list_usersRetweeted)	
-
-	#print list_usersRetweeted
-	#print top5Retweeted
-	#print mostCommonRetweeted
-	#print mostCommonRetweetedValue
-
 	top5Replied, mostCommonReplied, mostCommonRepliedValue = topFiveReplied(list_usersReplied)	
-	#print list_usersReplied
-	#print top5Replied
 
 	mentions, mostCommonMentioned, mostCommonMentionedValue  = topFiveMentioned(list_usersMentioned)
-	#print mentions
 
 	hashtags, mostCommonHashtag, mostCommonHashtagValue = topFiveHashtags(list_hashtags)
-	#print hashtags
 
 	popularDay = getPopularWeekdays(list_times)
-	#print popularDay
 
-	popularHour = getPopularHours(list_times)
-	#print popularHour 
+	sundayMorning, sundayAfternoon, sundayEvening, sundayNight, mondayMorning, mondayAfternoon, mondayEvening, mondayNight, tuesdayMorning, tuesdayAfternoon, tuesdayEvening, tuesdayNight, wednesdayMorning, wednesdayAfternoon, wednesdayEvening, wednesdayNight, thursdayMorning, thursdayAfternoon, thursdayEvening, thursdayNight, fridayMorning, fridayAfternoon, fridayEvening, fridayNight, saturdayMorning, saturdayAfternoon, saturdayEvening, saturdayNight, popularHour = getPopularHours(list_times)
 
 
 
@@ -54,7 +42,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
 	<!DOCTYPE html>
 	<html>
 	<head>
-	<link rel="stylesheet" type="text/css" href="/twitterApp/style.css" />
+	<link rel="stylesheet" type="text/css" href="/test/style.css" />
 		<link rel="stylesheet" type="text/css" href="/css/piechart.css">
 		<script src="/js/chartjs/Chart.bundle.js"></script>
 		<script src="/js/chartjs/utils.js"></script>
@@ -70,11 +58,11 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
                         datasets: [{
                                 data: [%s, %s, %s],
                                 backgroundColor: [
-                                        window.chartColors.red, 
-                                        window.chartColors.blue,
-                                        window.chartColors.yellow,
-                                        window.chartColors.orange,
                                         window.chartColors.green,
+                                        window.chartColors.blue,
+                                        window.chartColors.orange,
+                                        window.chartColors.yellow,
+                                        window.chartColors.purple, 
                                 ],
                         }],
                         labels: [
@@ -85,6 +73,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
                 },
                 options: {
                         responsive: true,
+			maintainAspectRatio: false,
                         legend: {
                                 display: true
                         },
@@ -124,10 +113,10 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
             labels: ["%s", "%s", "%s", "%s", "%s"],
             datasets: [{
                 label: 'retweets',
-                backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+                backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
                 //backgroundColor: color(window.chartColors.grey).alpha(0.5).rgbString(),
                 //backgroundColor: 000000,
-                borderColor: window.chartColors.red,
+                //borderColor: window.chartColors.blue,
                 //borderColor: window.chartColors.blue,
                 borderWidth: 1,
                 data: [%s, %s, %s, %s, %s]
@@ -149,6 +138,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
                         }       
                     },      
                     responsive: true,
+		    maintainAspectRatio: false,
                     legend: {
                         display: false,
                         position: 'right',
@@ -176,7 +166,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
         }],
 			yAxes: [{
 				ticks: {
-                			fontSize: 18
+                			fontSize: 14
             				}
 	}]
     }       
@@ -211,8 +201,8 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
             labels: ["%s", "%s", "%s", "%s", "%s"],
             datasets: [{
                 label: 'replies',
-                backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
-                borderColor: window.chartColors.red,
+                backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+                //borderColor: window.chartColors.red,
                 borderWidth: 1,
                 data: [%s, %s, %s, %s, %s ]
             }]
@@ -248,8 +238,8 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
             labels: ["%s","%s","%s","%s","%s"], 
             datasets: [{
                 label: 'mentions',
-                backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
-                borderColor: window.chartColors.red,
+                backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+                //borderColor: window.chartColors.red,
                 borderWidth: 1,
                 data: [%s, %s, %s, %s, %s] 
             }]
@@ -280,8 +270,8 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
             labels: ["%s", "%s", "%s", "%s", "%s"],
             datasets: [{
                 label: 'hashtags',
-                backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
-                borderColor: window.chartColors.red,
+                backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+                //borderColor: window.chartColors.red,
                 borderWidth: 1,
                 data: [%s, %s, %s, %s, %s]
             }]
@@ -296,7 +286,91 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
         <!-- ================================ -->
 """ % (mostCommonHashtag[0], mostCommonHashtag[1], mostCommonHashtag[2], mostCommonHashtag[3], mostCommonHashtag[4], mostCommonHashtag[0], mostCommonHashtag[1], mostCommonHashtag[2], mostCommonHashtag[3], mostCommonHashtag[4], mostCommonHashtagValue[0], mostCommonHashtagValue[1], mostCommonHashtagValue[2], mostCommonHashtagValue[3], mostCommonHashtagValue[4])
 
+
+	#======================================================================	
+	# Python Heredoc for Stacked Bar Chart - Hours
+	#======================================================================	
 	html += """
+        <!-- ======================================= -->
+        <!--   Begin Stacked Bar Chart JavaScript    -->
+        <!-- ======================================= -->
+	<script>
+        var barChartData = {
+            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            datasets: [{
+                label: 'Morning (6-11 AM)',
+                backgroundColor: window.chartColors.orange,
+                stack: 'Stack 0',
+                data: [%s, %s, %s, %s, %s, %s, %s]
+            }, {
+                label: 'Afternoon (12-5 PM)',
+                backgroundColor: window.chartColors.blue,
+                stack: 'Stack 0',
+                data: [%s, %s, %s, %s, %s, %s, %s]
+            }, {
+                label: 'Evening (6-11 PM)',
+                backgroundColor: window.chartColors.green,
+                stack: 'Stack 0',
+                data: [%s, %s, %s, %s, %s, %s, %s]
+            }, {
+                label: 'Night (Midnight-5 AM)',
+                backgroundColor: window.chartColors.purple,
+                stack: 'Stack 0',
+                data: [%s, %s, %s, %s, %s, %s, %s]
+            }]
+
+        };
+
+	function drawStackedChart() {
+            var ctx = document.getElementById("stackedBarChart").getContext("2d");
+            window.myBar = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                    title:{
+                        display:true,
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    responsive: true,
+		    maintainAspectRatio: false,
+                    scales: {
+                        xAxes: [{
+                            stacked: true,
+			    ticks: {
+             			   beginAtZero: true
+            			   }
+                        }],
+                        yAxes: [{
+                            stacked: true,
+			    ticks: {
+             			   beginAtZero: true
+            			   }
+                        }]
+                    }
+                }
+            });
+        };
+
+	</script>
+
+
+
+
+
+
+        <!-- ======================================= -->
+        <!--     End Stacked Bar Chart JavaScript    -->
+        <!-- ======================================= -->
+""" % (sundayMorning, mondayMorning, tuesdayMorning, wednesdayMorning, thursdayMorning, fridayMorning, saturdayMorning, sundayAfternoon, mondayAfternoon, tuesdayAfternoon, wednesdayAfternoon, thursdayAfternoon, fridayAfternoon, saturdayAfternoon, sundayEvening, mondayEvening, tuesdayEvening, wednesdayEvening, thursdayEvening, fridayEvening, saturdayEvening, sundayNight, mondayNight, tuesdayNight, wednesdayNight, thursdayNight, fridayNight, saturdayNight)
+
+
+	html += """
+
+
+
 
         <!-- ==================================== -->
         <!--     Draw all charts on page load     -->
@@ -308,6 +382,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
 		drawBarChart("barChart2Canvas",horizontalBarChart2Data);
 		drawBarChart("barChart3Canvas",horizontalBarChart3Data);
 		drawBarChart("barChart4Canvas",horizontalBarChart4Data);
+		drawStackedChart()
 	}
     </script>
 
@@ -315,42 +390,53 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
 	</head>
 	<body>
 	<div dir="auto">
-	<br><br><br><br>
+	<br>
 	<h1> We've found some interesting data for @%s... </h1>
-	<p> We analyzed %s tweets, from which %s were retweets, and %s were replies. 
+	<h2> We analyzed %s tweets, from which %s were retweets, and %s were replies. </h2> 
         <center>
-	   <div id="canvas-holder" style="width: 300px;">
-		<canvas id="chart-area" width="300" height="300"></canvas>
+	   <div id="canvas-holder" style="position: relative; height:20vh; width: 40vw; border:0px solid black">
+		<canvas id="chart-area" width="200" height="200"></canvas>
 		<div id="chartjs-tooltip">
 			<table></table>
 		</div>
 	   </div>
         </center>
 	<p> %s
+	<!-- BarChart 1 -->
         <center>
-           <div id="container" style="width: 75%%;">
+	   <div style="position: relative; height:20vh; width: 40vw; border:0px solid black"> 
               <canvas id="barChart1Canvas"></canvas>
            </div>
         </center>
 	<p> %s
+	<!-- BarChart 2 -->
         <center>
-           <div id="container" style="width: 75%%;">
+	   <div style="position: relative; height:20vh; width: 40vw; border:0px solid black"> 
               <canvas id="barChart2Canvas"></canvas>
            </div>
         </center>
 	<p> %s
+	<!-- BarChart 3 -->
         <center>
-           <div id="container" style="width: 75%%;">
+	   <div style="position: relative; height:20vh; width: 40vw; border:0px solid black"> 
               <canvas id="barChart3Canvas"></canvas>
            </div>
         </center>
 	<p> %s
+	<!-- BarChart 4 -->
         <center>
-           <div id="container" style="width: 75%%;">
+	   <div style="position: relative; height:20vh; width: 40vw; border:0px solid black"> 
               <canvas id="barChart4Canvas"></canvas>
            </div>
         </center>
-	<p><br> %s is the day of the week you are most active. <br>On any given day, %s (%s time) is your favorite time to tweet :) </p>
+	<p> <center><div class="section-header" style="position: relative; height:8vh; width: 60vw; border: 0px solid black"><br> %s is the day of the week you are most active. On any given day, %s (%s time) is your favorite time to tweet :) </div>
+	</center>
+	<!-- Stacked Bar Chart -->
+        <p><center>
+	   <div style="position: relative; height:25vh; width: 70vw; border: 0px solid black"> 
+              <canvas id="stackedBarChart"></canvas>
+           </div>
+        </center>
 	<pre>
 
 

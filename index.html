@@ -1,36 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-body {background-color: powderblue;}
-h1 {
-    color: black;
-    font-family: Impact, Charcoal, sans-serif;
-    font-size: 200%;
-    text-align: center;
-}
-h2 {
-    color: black;
-    font-family: Impact, Charcoal, sans-serif;
-    font-size: 200%;
-    text-align: center;
-}
-p {
-    color: black;
-    font-family: "Lucida Grande", sans-serif; 
-    font-size: 100%;
-    text-align: center;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="/test/indexStyle.css" /> 
 </head>
 <body>
 <h2><br><br><br><br></h2>
-<h1>Curious to learn who your Twitter best buddies are?</h1>
-<p>Sign in with your Twitter account to learn who you interact with the most... and when. </p>
 <center>
+<div class="section-header" style="position: relative; height:10vh; width: 40vw; border: 0px solid black">
+<h1>Curious to learn who your Twitter best buddies are?</h1>
+<h2>Sign in with your Twitter account to learn who you interact with the most... and when. </h2>
 <form action="twitterApp.cgi">
 <input type="hidden" name="action" value="step1">
-<input type="submit" value="Sign in with Twitter">
+<input type="submit" class="button" value="Sign in with Twitter">
+</div>
 </center>
 </body>
 </html>

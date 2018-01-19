@@ -12,6 +12,8 @@ import json
 import gzip
 import sys
 import subprocess #only needed to call twitter_dm
+subprocess.__file__
+
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -25,6 +27,8 @@ form = cgi.FieldStorage()
 
 client_key = '0XjfIpYCYq9Ve2FLaO5MOVoEv'
 client_secret = '2ne1n8nqsCg6eN20RPg0Nbuyt83coyTSGYu6SahqKnPePd8XYF' 
+#callback_uri = 'http://www.codewithaheart.com/test/twitterApp.cgi?action=testing'
+#callback_uri = 'http://www.codewithaheart.com/test/twitterApp.cgi?action=step3'
 callback_uri = 'http://www.codewithaheart.com/twitterApp/twitterApp.cgi?action=step3'
 
 # Endpoints found in the OAuth provider API documentation
@@ -104,16 +108,17 @@ if action=='step3':
 	# this will be used only if using the twitter_dm library to collect the data
 	usernameToFile = open('/www/codewithaheart.com/docs/twitterApp/usernames/' + screenName + '.txt', 'w')
 	usernameToFile.write(screenName)
-	subprocess.Popen('python /home/thalita/twitter_dm/examples/collect_user_data_full.py kdata/' + screenName + '.txt usernames/' + screenName + '.txt twitter_dm_json/ n n y', shell=True)
+	subprocess.Popen('/apps/python/2.7.13/bin/python /apps/twitter_dm/examples/collect_user_data_full.py /www/codewithaheart.com/docs/twitterApp/kdata/' + screenName + '.txt /www/codewithaheart.com/docs/twitterApp/usernames/' + screenName + '.txt /www/codewithaheart.com/docs/twitterApp/twitter_dm_json_1stattempt/ n n y 1>>/dev/null 2>>/dev/null', shell=True)
+	subprocess.Popen('/apps/python/2.7.13/bin/python /apps/twitter_dm/examples/collect_user_data_full.py /www/codewithaheart.com/docs/twitterApp/kdata/' + screenName + '.txt /www/codewithaheart.com/docs/twitterApp/usernames/' + screenName + '.txt /www/codewithaheart.com/docs/twitterApp/twitter_dm_json/ n n y 1>>/dev/null 2>>/dev/null', shell=True)
 	jsonFileName = '/www/codewithaheart.com/docs/twitterApp/twitter_dm_json/json/' + screenName + '.json.gz'
 
 	# ---- OAUTH FLOW ----
 	# this will be used if collecting the data through oauth flow
 	#jsonFileName = '/www/codewithaheart.com/docs/twitterApp/json/' + screenName + '.json.gz'
 
-	with gzip.GzipFile(jsonFileName, 'w') as outfile:
-		for obj in r.json():
-        		outfile.write(json.dumps(obj) + '\n')
+	#with gzip.GzipFile(jsonFileName, 'w') as outfile:
+	#	for obj in r.json():
+        #		outfile.write(json.dumps(obj) + '\n')
 	
 
 # STEP 6: analyses results and dysplays on webpage:
