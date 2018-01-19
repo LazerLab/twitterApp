@@ -114,9 +114,9 @@ if action=='step3':
 
 	# ---- OAUTH FLOW ----
 	# this will be used if collecting the data through oauth flow
-	#jsonFileName = '/www/codewithaheart.com/docs/twitterApp/json/' + screenName + '.json.gz'
+	#jsonFileName_oauth = '/www/codewithaheart.com/docs/twitterApp/json/' + screenName + '.json.gz'
 
-	#with gzip.GzipFile(jsonFileName, 'w') as outfile:
+	#with gzip.GzipFile(jsonFileName_oauth, 'w') as outfile:
 	#	for obj in r.json():
         #		outfile.write(json.dumps(obj) + '\n')
 	
