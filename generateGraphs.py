@@ -15,7 +15,7 @@ import subprocess #only needed to call twitter_dm
 reload(sys)
 sys.setdefaultencoding('utf8')
 
-from topRetweets import *
+from generateStats import *
 
 
 def generateGraphs(screenName, jsonFileName, tzinfo_name):

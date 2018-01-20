@@ -19,7 +19,8 @@ sys.setdefaultencoding('utf8')
 
 
 from generateGraphs import *
-from topRetweets import *
+from generateStats import *
+from collectTweets import *
 
 print 'Content-type: text/html\n\n'
 
@@ -69,8 +70,6 @@ if action=='step3':
 	resource_owner_secret = oauth_tokens.get('oauth_token_secret')
 
 # STEP 4: Access protected resources. OAuth1 access tokens typically do not expire and may be re-used until revoked by the user or yourself.
-	tweets_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json?count=3200'
-	credentials_url = 'https://api.twitter.com/1.1/account/verify_credentials.json'
 	settings_url = 'https://api.twitter.com/1.1/account/settings.json'
 
 	# Using OAuth1Session
@@ -78,13 +77,9 @@ if action=='step3':
 			      client_secret=client_secret,
 			      resource_owner_key=resource_owner_key,
 			      resource_owner_secret=resource_owner_secret)
-	r = oauth.get(tweets_url)
-	c = oauth.get(credentials_url)
 	s = oauth.get(settings_url)
 
 	# retrieving screen name and timezone
-	#credentials =  c.json()
-	#screenName =  credentials["screen_name"]	
 	settings =  s.json()
         screenName =  settings["screen_name"]
         if "time_zone" in settings:
@@ -95,30 +90,15 @@ if action=='step3':
 
 	# saving keys to file:
 	keyToFile = open('/www/codewithaheart.com/docs/twitterApp/kdata/' + screenName + '.txt', 'w') 
-	
-	# this will be used if collecting the data through oauth flow
-	#keyToFile.write(screenName + ',' + resource_owner_key + ',' + resource_owner_secret + '\n') 
+	keyToFile.write(screenName + ',' + resource_owner_key + ',' + resource_owner_secret + '\n') 
 
-	# this will be used only if using the twitter_dm library to collect the data
-	keyToFile.write(client_key + ',' + client_secret + '\n' + screenName + ',' + resource_owner_key + ',' + resource_owner_secret + '\n') 
 
 # STEP 5: writes tweets to a json file:
-	
-	# ---- TWITTER_DM ----
-	# this will be used only if using the twitter_dm library to collect the data
-	usernameToFile = open('/www/codewithaheart.com/docs/twitterApp/usernames/' + screenName + '.txt', 'w')
-	usernameToFile.write(screenName)
-	subprocess.Popen('/apps/python/2.7.13/bin/python /apps/twitter_dm/examples/collect_user_data_full.py /www/codewithaheart.com/docs/twitterApp/kdata/' + screenName + '.txt /www/codewithaheart.com/docs/twitterApp/usernames/' + screenName + '.txt /www/codewithaheart.com/docs/twitterApp/twitter_dm_json_1stattempt/ n n y 1>>/dev/null 2>>/dev/null', shell=True)
-	subprocess.Popen('/apps/python/2.7.13/bin/python /apps/twitter_dm/examples/collect_user_data_full.py /www/codewithaheart.com/docs/twitterApp/kdata/' + screenName + '.txt /www/codewithaheart.com/docs/twitterApp/usernames/' + screenName + '.txt /www/codewithaheart.com/docs/twitterApp/twitter_dm_json/ n n y 1>>/dev/null 2>>/dev/null', shell=True)
-	jsonFileName = '/www/codewithaheart.com/docs/twitterApp/twitter_dm_json/json/' + screenName + '.json.gz'
+	jsonFileName = '/www/codewithaheart.com/docs/twitterApp/json/' + screenName + '_web.json.gz'
+	numberTweets = getTweets(client_key, client_secret, resource_owner_key, resource_owner_secret, screenName, jsonFileName)
 
-	# ---- OAUTH FLOW ----
-	# this will be used if collecting the data through oauth flow
-	#jsonFileName_oauth = '/www/codewithaheart.com/docs/twitterApp/json/' + screenName + '.json.gz'
-
-	#with gzip.GzipFile(jsonFileName_oauth, 'w') as outfile:
-	#	for obj in r.json():
-        #		outfile.write(json.dumps(obj) + '\n')
+	if numberTweets == 0:
+		print '<META http-equiv="refresh" content="0;URL=noTweets.html">'
 	
 
 # STEP 6: analyses results and dysplays on webpage:
