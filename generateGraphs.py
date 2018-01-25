@@ -40,10 +40,10 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
 	<!DOCTYPE html>
 	<html>
 	<head>
-	<link rel="stylesheet" type="text/css" href="style.css" />
-		<link rel="stylesheet" type="text/css" href="/css/piechart.css">
-		<script src="/js/chartjs/Chart.bundle.js"></script>
-		<script src="/js/chartjs/utils.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/piechart.css">
+		<script src="js/chartjs/Chart.bundle.js"></script>
+		<script src="js/chartjs/utils.js"></script>
 	<meta charset="utf-8">
 
         <!-- ================================ -->
