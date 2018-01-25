@@ -1,5 +1,17 @@
 #!/apps/python/2.7.13/bin/python
 
+##============================================================================== 
+# file:                 collectTweets.py 
+# date:                 Thu Jan 25 00:31:03 GMT 2018
+# author(s):            Thalita Coleman  <thalitaneu@gmail.com>
+# abstract:             Obtains user twitter keys, calls functions tha retrieves 
+#			tweets data from Twitter API, writes data to file, 
+#			analyses results and dysplays on webpage.
+#------------------------------------------------------------------------------ 
+# requirements: python 2.7
+#------------------------------------------------------------------------------ 
+##============================================================================== 
+
 import os
 import requests
 from requests_oauthlib import OAuth1Session
@@ -11,8 +23,11 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 
-
  
+#------------------------------
+# getLastTweetId: returns the id
+# of the last tweet of a list
+#------------------------------
 def getLastTweetId(tweetList):
 	lastTweetPosition = len(tweetList) -1
 	lastTweet = tweetList[lastTweetPosition]
@@ -21,6 +36,11 @@ def getLastTweetId(tweetList):
 	return lastTweetId
 
 
+#------------------------------
+# getTweets: retrieves tweets from 
+# Twitter API and save it to 
+# a json file.
+#------------------------------
 def getTweets(client_key, client_secret, resource_owner_key, resource_owner_secret, screenName, jsonFileName): 
 	tweetList = []
 	count = 200
