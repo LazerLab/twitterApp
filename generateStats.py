@@ -1,6 +1,15 @@
 #!/apps/python/2.7.13/bin/python
 
-
+##==============================================================================
+# file:                 generateStats.py
+# date:                 Thu Jan 25 00:31:03 GMT 2018
+# author(s):            Thalita Coleman  <thalitaneu@gmail.com>
+# abstract:             Contains functions that reads tweets from json file and 
+#			process data.
+#------------------------------------------------------------------------------
+# requirements: python 2.7
+#------------------------------------------------------------------------------
+##==============================================================================
 
 import gzip
 import json
@@ -19,8 +28,8 @@ import pytz
 from pytz import timezone
 
 #------------------------------
-# lists: returns a list screen names 
-# of accounts retweeted, replied to and
+# lists: returns a list of screen names 
+# of accounts retweeted, replied to, and
 # mentioned by the user; also returns
 # a list of hashtags and timestamps
 #------------------------------
@@ -32,7 +41,7 @@ def lists(jsonFileName, tzinfo_name):
 	hashtags = []
         timestamps = []
 	separator='\t'
-	####### WORK ON TESTING FOR GZ FILE
+
 	with gzip.open(jsonFileName) as in_file:
 		for line in in_file:
 			line = re.sub('[\r\n\t]', '', line)
@@ -144,7 +153,7 @@ def topFiveReplied(list_users):
 	return ' '.join(mostCommon), mostCommon_screenName, mostCommon_value
 
 #------------------------------
-# topMentioned: returns the 5 screen names 
+# topFiveMentioned: returns the 5 screen names 
 # of accounts the user mentions the most
 #------------------------------
 def topFiveMentioned(list_users):
@@ -167,7 +176,7 @@ def topFiveMentioned(list_users):
 
 
 #------------------------------
-# topHashtags: returns the 5 most common
+# topFiveHashtags: returns the 5 most common
 # hashtags mentioned by the user
 #------------------------------
 def topFiveHashtags(list):
@@ -215,25 +224,9 @@ def getPopularWeekdays(times):
         return popularDay
 
 
-#------------------------------
-# popularHour: returns the hour of the  day 
-# the user is more active on Twitter
-#------------------------------
-#def getPopularHours(times):
-#	hour = [11,12]  # the hour is the 11,12 elements in Mon Mar 28 15:59:45 +0000 2011
-#	hours = []
-#	hourFormat = {'01': '1 A.M.', '02': '2 A.M.', '03': '3 A.M.', '04': '4 A.M.', '05': '5 A.M.', '06': '6 A.M.', '07': '7 A.M.', '08': '8 A.M.', '09': '9 A.M.', '10': '10 A.M.', '11': '11 A.M.', '12': 'noon', '13': '1 P.M.', '14': '2 P.M.', '15': '3 P.M.', '16': '4 P.M.', '17': '5 P.M.', '18': '6 P.M.', '19': '7 P.M.', '20': '8 P.M.', '21': '9 P.M.', '22': '10 P.M.', '23': '11 P.M.', '00': 'midnight'} 
-	# appends the hours to the list
-#	for t in times:
-#        	hours.append(''.join(itemgetter(*hour)(t)))
-#
-#        popularHour =  str(max(set(hours), key=hours.count))
-#        popularHour = hourFormat[str(popularHour)]
-#        return popularHour
-
 
 #------------------------------
-# popularHour: returns the hour of the  day 
+# popularHour: returns the hours of the  day 
 # the user is more active on Twitter
 #------------------------------
 def getPopularHours(times):
