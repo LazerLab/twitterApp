@@ -1,5 +1,17 @@
 #!/apps/python/2.7.13/bin/python
 
+##============================================================================== 
+# file:                 twitterApp.cgi
+# date:                 Thu Jan 25 00:31:03 GMT 2018
+# author(s):            Thalita Coleman  <thalitaneu@gmail.com>
+# abstract:             Obtains user twitter keys, calls functions tha retrieves 
+#			tweets data from Twitter API, writes data to file, 
+#			analyses results and dysplays on webpage.
+#------------------------------------------------------------------------------ 
+# requirements: python 2.7, requests 
+#------------------------------------------------------------------------------ 
+##============================================================================== 
+
 import os
 from os import listdir #only used for action=="testing"
 from os.path import isfile, join #only used for action=="testing"
@@ -11,8 +23,6 @@ import io
 import json
 import gzip
 import sys
-import subprocess #only needed to call twitter_dm
-subprocess.__file__
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -49,7 +59,7 @@ if action=='step1':
 	resource_owner_key = fetch_response.get('oauth_token')
 	resource_owner_secret = fetch_response.get('oauth_token_secret')
 
-# STEP 2: Obtain authorization from the user (resource owner) to access their protected resources (images, tweets, etc.). This is commonly done by redirecting the user to a specific url to which you add the request token as a query parameter. Note that not all services will give you a verifier even if they should. Also the oauth_token given here will be the same as the one in the previous step.
+# STEP 2: Obtain authorization from the user (resource owner) to access their tweets. 
 	
 	authorize_url = oauth.authorization_url(authorization_url)
 	#print authorize_url	
@@ -93,7 +103,7 @@ if action=='step3':
 	keyToFile.write(screenName + ',' + resource_owner_key + ',' + resource_owner_secret + '\n') 
 
 
-# STEP 5: writes tweets to a json file:
+# STEP 5: Writes tweets to a json file:
 	jsonFileName = '/www/codewithaheart.com/docs/twitterApp/json/' + screenName + '_web.json.gz'
 	numberTweets = getTweets(client_key, client_secret, resource_owner_key, resource_owner_secret, screenName, jsonFileName)
 
@@ -101,7 +111,7 @@ if action=='step3':
 		print '<META http-equiv="refresh" content="0;URL=noTweets.html">'
 	
 
-# STEP 6: analyses results and dysplays on webpage:
+# STEP 6: Analyses results and dysplays on webpage:
 	generateGraphs(screenName, jsonFileName, tzinfo_name)
 
 
