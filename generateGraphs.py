@@ -1,25 +1,23 @@
 #!/apps/python/2.7.13/bin/python
 
+##==============================================================================
+# file:                 generateGraphs.py 
+# date:                 Thu Jan 25 00:31:03 GMT 2018
+# author(s):            Thalita Coleman  <thalitaneu@gmail.com>
+# abstract:             Call functions that contains user's processed data and
+#			generates javascript graphs.
+#------------------------------------------------------------------------------
+# requirements: python 2.7, generateStats.py 
+#------------------------------------------------------------------------------
+##==============================================================================
+
 import os
-from os import listdir #only used for action=="testing"
-from os.path import isfile, join #only used for action=="testing"
-import cgi
-import cgitb; cgitb.enable()
-import requests
-from requests_oauthlib import OAuth1Session
-import io
-import json
-import gzip
-import sys
-import subprocess #only needed to call twitter_dm
-reload(sys)
-sys.setdefaultencoding('utf8')
 
 from generateStats import *
 
 
+# call functions that contains user's processed data
 def generateGraphs(screenName, jsonFileName, tzinfo_name):
-	# call functions that contains user's data
 	total_count, tweet_count, retweet_count, reply_count, list_usersRetweeted, list_usersReplied, list_usersMentioned, list_hashtags, list_times = lists(jsonFileName, tzinfo_name) 
 
 	top5Retweeted, mostCommonRetweeted, mostCommonRetweetedValue = topFiveRetweeted(list_usersRetweeted)	

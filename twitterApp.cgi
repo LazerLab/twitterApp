@@ -8,7 +8,7 @@
 #			tweets data from Twitter API, writes data to file, 
 #			analyses results and dysplays on webpage.
 #------------------------------------------------------------------------------ 
-# requirements: python 2.7, requests 
+# requirements: python 2.7, generateGraphs.py, generateStats.py, collectTweets.py 
 #------------------------------------------------------------------------------ 
 ##============================================================================== 
 
