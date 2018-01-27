@@ -56,8 +56,11 @@ def lists(jsonFileName, tzinfo_name):
 				tweetType = "Retweet"
 				if tweet["entities"]["user_mentions"] != []:
 					referenceHandle = tweet["entities"]["user_mentions"][0]["screen_name"]
-				else:
-					referenceHandle = "testing"
+				# extract the reference handle from the tweet text
+				else: 
+					tweetText = tweet["text"]
+                                        tweetText = tweetText.replace('RT @', '')
+                                        referenceHandle = re.sub(r':.*$', '', tweetText)
 				if tweet["entities"]['urls'] != []:
 					referenceUrl = tweet["entities"]['urls'][0]["expanded_url"] 
 				elif tweet["retweeted_status"]['entities']['urls'] != []:

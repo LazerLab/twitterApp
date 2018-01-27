@@ -131,7 +131,7 @@ if action == "testing":
 	Select a json file to process:
 	<br><br> 
 	"""
-	jsonPath = "/www/default/docs/test/json"
+	jsonPath = "/www/default/docs/twitterApp/json"
 	jsonFiles = [f for f in listdir(jsonPath) if isfile(join(jsonPath, f))]
 	for file in jsonFiles:
 		print '<br><input type="radio" name="jsonFile" value="' + file + '">' + file 
@@ -146,7 +146,7 @@ if action == "testing":
  	"""
 
 if action == "processTestFile":
-	jsonPath = "/www/default/docs/test/json"
+	jsonPath = "/www/default/docs/twitterApp/json"
 	screenName = str(form["jsonFile"].value).replace('.json.gz', '')
 	jsonFileName = jsonPath + "/" + str(form["jsonFile"].value)
 	
