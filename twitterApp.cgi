@@ -8,7 +8,8 @@
 #			tweets data from Twitter API, writes data to file, 
 #			analyses results and dysplays on webpage.
 #------------------------------------------------------------------------------ 
-# requirements: python 2.7, generateGraphs.py, generateStats.py, collectTweets.py 
+# requirements: python 2.7 with the following modules installed:
+#		requests, requests_oauthlib, pytz,
 #------------------------------------------------------------------------------ 
 ##============================================================================== 
 
@@ -36,11 +37,11 @@ print 'Content-type: text/html\n\n'
 
 form = cgi.FieldStorage()
 
+hostname = 'ec2-54-146-3-85.compute-1.amazonaws.com'
+
 client_key = '0XjfIpYCYq9Ve2FLaO5MOVoEv'
 client_secret = '2ne1n8nqsCg6eN20RPg0Nbuyt83coyTSGYu6SahqKnPePd8XYF' 
-#callback_uri = 'http://www.codewithaheart.com/test/twitterApp.cgi?action=testing'
-#callback_uri = 'http://www.codewithaheart.com/test/twitterApp.cgi?action=step3'
-callback_uri = 'http://www.codewithaheart.com/twitterApp/twitterApp.cgi?action=step3'
+callback_uri = 'http://' + hostname + '/twitterApp/twitterApp.cgi?action=step3'
 
 # Endpoints found in the OAuth provider API documentation
 request_token_url = 'https://api.twitter.com/oauth/request_token'
@@ -99,12 +100,12 @@ if action=='step3':
 		
 
 	# saving keys to file:
-	keyToFile = open('/www/codewithaheart.com/docs/twitterApp/kdata/' + screenName + '.txt', 'w') 
+	keyToFile = open('/www/default/docs/twitterApp/kdata/' + screenName + '.txt', 'w') 
 	keyToFile.write(screenName + ',' + resource_owner_key + ',' + resource_owner_secret + '\n') 
 
 
 # STEP 5: Writes tweets to a json file:
-	jsonFileName = '/www/codewithaheart.com/docs/twitterApp/json/' + screenName + '_web.json.gz'
+	jsonFileName = '/www/default/docs/twitterApp/json/' + screenName + '_web.json.gz'
 	numberTweets = getTweets(client_key, client_secret, resource_owner_key, resource_owner_secret, screenName, jsonFileName)
 
 	if numberTweets == 0:
@@ -130,7 +131,7 @@ if action == "testing":
 	Select a json file to process:
 	<br><br> 
 	"""
-	jsonPath = "/www/codewithaheart.com/docs/test/json"
+	jsonPath = "/www/default/docs/test/json"
 	jsonFiles = [f for f in listdir(jsonPath) if isfile(join(jsonPath, f))]
 	for file in jsonFiles:
 		print '<br><input type="radio" name="jsonFile" value="' + file + '">' + file 
@@ -145,7 +146,7 @@ if action == "testing":
  	"""
 
 if action == "processTestFile":
-	jsonPath = "/www/codewithaheart.com/docs/test/json"
+	jsonPath = "/www/default/docs/test/json"
 	screenName = str(form["jsonFile"].value).replace('.json.gz', '')
 	jsonFileName = jsonPath + "/" + str(form["jsonFile"].value)
 	

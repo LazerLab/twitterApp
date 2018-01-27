@@ -166,7 +166,7 @@ def topFiveMentioned(list_users):
 		mostCommon_value.append(x[1])
 		counter += 1
 	if len(mostCommon_screenName) >= 1:
-		mostCommon = ['<center><div class="section-header" style="position: relative; height:5vh; width: 80vw; border: 0px solid black"><br> We&#39;ve got a list of people who you usually mention:']
+		mostCommon = ['<center><div class="section-header" style="position: relative; height:5vh; width: 80vw; border: 0px solid black"><br> You usually mention:']
 	else:
 		mostCommon = ['<center><div class="section-header" style="position: relative; height:3vh; width: 80vw; border: 0px solid black"><br> Mmm... we&#39;ve found that you usually don&#39;t mention other users in your tweets.']
 	mostCommon.append('</div>\n</center>')
@@ -208,6 +208,11 @@ def numberRetweets(list_users):
 # the user is more active on Twitter
 #------------------------------
 def getPopularWeekdays(times):
+	# date of the 1st tweet on the list
+        firstTweet = times[1] # Mon Jan 16 06:56:18 -0800 2017
+        dateFirstTweet = firstTweet.split() # ['Mon', 'Jan', '16', '06:56:18', '-0800', '2017']
+        dateFirstTweet = dateFirstTweet[1] + ' ' + dateFirstTweet[2] + ', ' + dateFirstTweet[5] # Jan 16, 2017
+
 	weekday = [0, 1, 2] # weekday is the 0-2 elements in the Mon Mar 28 15:59:45 +0000 2011
 	weekdays = []
 	fullName = {'Mon': 'Monday', 'Tue': 'Tuesday', 'Wed': 'Wednesday', 'Thu': 'Thursday', 'Fri': 'Friday', 'Sat': 'Saturday', 'Sun': 'Sunday'} 
@@ -221,7 +226,7 @@ def getPopularWeekdays(times):
                 week[w] = weekdays.count(w)
         popularDay = max(week.iteritems(), key=operator.itemgetter(1))[0]
         popularDay =  fullName[popularDay]
-        return popularDay
+        return popularDay, dateFirstTweet
 
 
 

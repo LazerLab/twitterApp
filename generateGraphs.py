@@ -27,7 +27,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
 
 	hashtags, mostCommonHashtag, mostCommonHashtagValue = topFiveHashtags(list_hashtags)
 
-	popularDay = getPopularWeekdays(list_times)
+	popularDay, dateFirstTweet = getPopularWeekdays(list_times)
 
 	sundayMorning, sundayAfternoon, sundayEvening, sundayNight, mondayMorning, mondayAfternoon, mondayEvening, mondayNight, tuesdayMorning, tuesdayAfternoon, tuesdayEvening, tuesdayNight, wednesdayMorning, wednesdayAfternoon, wednesdayEvening, wednesdayNight, thursdayMorning, thursdayAfternoon, thursdayEvening, thursdayNight, fridayMorning, fridayAfternoon, fridayEvening, fridayNight, saturdayMorning, saturdayAfternoon, saturdayEvening, saturdayNight, popularHour = getPopularHours(list_times)
 
@@ -390,7 +390,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
 	<div dir="auto">
 	<br>
 	<h1> We've found some interesting data for @%s... </h1>
-	<h2> We analyzed %s tweets, from which %s were retweets, and %s were replies. </h2> 
+	<h2> We analyzed %s tweets since %s. %s were retweets and %s were replies. </h2> 
         <center>
 	   <div id="canvas-holder" style="position: relative; height:20vh; width: 40vw; border:0px solid black">
 		<canvas id="chart-area" width="200" height="200"></canvas>
@@ -442,11 +442,10 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
 	</div>
 	</body>
 	</html>
-	""" % (screenName,total_count,retweet_count,reply_count, top5Retweeted, top5Replied, mentions, hashtags, popularDay, popularHour, tzinfo_name)
+	""" % (screenName,total_count, dateFirstTweet, retweet_count,reply_count, top5Retweeted, top5Replied, mentions, hashtags, popularDay, popularHour, tzinfo_name)
 
-#	html = html.format(screenName=screenName, total_tweets=total_count, retweet_count=retweet_count, reply_count=reply_count, top5Retweeted=top5Retweeted, top5Replied=top5Replied, mentions=mentions, hashtags=hashtags, popularDay=popularDay, tzinfo_name=tzinfo_name, popularHour=popularHour)
 	print html
 
-	debugFile = open('/www/codewithaheart.com/docs/twitterApp/debug/debug.txt', 'a') 
+	debugFile = open('/www/default/docs/twitterApp/debug/' + screenName + '.txt', 'a') 
 	debugFile.write(html + '\n\n\n\n\n')
 
