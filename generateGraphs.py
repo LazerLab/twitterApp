@@ -31,7 +31,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
 
 	sundayMorning, sundayAfternoon, sundayEvening, sundayNight, mondayMorning, mondayAfternoon, mondayEvening, mondayNight, tuesdayMorning, tuesdayAfternoon, tuesdayEvening, tuesdayNight, wednesdayMorning, wednesdayAfternoon, wednesdayEvening, wednesdayNight, thursdayMorning, thursdayAfternoon, thursdayEvening, thursdayNight, fridayMorning, fridayAfternoon, fridayEvening, fridayNight, saturdayMorning, saturdayAfternoon, saturdayEvening, saturdayNight, popularHour = getPopularHours(list_times)
 
-
+	sundayMorningNormalized, sundayAfternoonNormalized, sundayEveningNormalized, sundayNightNormalized, mondayMorningNormalized, mondayAfternoonNormalized, mondayEveningNormalized, mondayNightNormalized, tuesdayMorningNormalized, tuesdayAfternoonNormalized, tuesdayEveningNormalized, tuesdayNightNormalized, wednesdayMorningNormalized, wednesdayAfternoonNormalized, wednesdayEveningNormalized, wednesdayNightNormalized, thursdayMorningNormalized, thursdayAfternoonNormalized, thursdayEveningNormalized, thursdayNightNormalized, fridayMorningNormalized, fridayAfternoonNormalized, fridayEveningNormalized, fridayNightNormalized, saturdayMorningNormalized, saturdayAfternoonNormalized, saturdayEveningNormalized, saturdayNightNormalized, popularHour = getPopularHoursNormalized(list_times)
 
 	#======================================================================	
  	#   Python HereDoc for PieChart
@@ -214,12 +214,6 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
         <!-- ================================ -->
 """ % (mostCommonReplied[0], mostCommonReplied[1], mostCommonReplied[2], mostCommonReplied[3], mostCommonReplied[4], mostCommonReplied[0], mostCommonReplied[1], mostCommonReplied[2], mostCommonReplied[3], mostCommonReplied[4], mostCommonRepliedValue[0], mostCommonRepliedValue[1], mostCommonRepliedValue[2], mostCommonRepliedValue[3], mostCommonRepliedValue[4])
 
-#("1", "2", "3", "4", "5", "1", "2", "3", "4", "5", 1,2,3,4,5)
-#(mostCommonReplied[0], mostCommonReplied[1], mostCommonReplied[2], mostCommonReplied[3], mostCommonReplied[4], mostCommonReplied[0], mostCommonReplied[1], mostCommonReplied[2], mostCommonReplied[3], mostCommonReplied[4], mostCommonRepliedValue[0], mostCommonRepliedValue[1], mostCommonRepliedValue[2], mostCommonRepliedValue[3], mostCommonRepliedValue[4]) 
-
-
-
-
 
 
 	#======================================================================	
@@ -374,7 +368,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
         <!--   Begin Stacked Bar Chart Normalized JavaScript  -->
         <!-- ================================================ -->
 	<script>
-        var barChartData = {
+        var barChartDataNormalized = {
             labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             datasets: [{
                 label: 'Morning (6-11 AM)',
@@ -404,7 +398,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
             var ctx = document.getElementById("stackedBarChartNormalized").getContext("2d");
             window.myBar = new Chart(ctx, {
                 type: 'bar',
-                data: barChartData,
+                data: barChartDataNormalized,
                 options: {
                     title:{
                         display:true,
@@ -443,7 +437,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
         <!-- ================================================== -->
         <!--     End Stacked Bar Chart Normalized JavaScript    -->
         <!-- ================================================== -->
-""" % (sundayMorning, mondayMorning, tuesdayMorning, wednesdayMorning, thursdayMorning, fridayMorning, saturdayMorning, sundayAfternoon, mondayAfternoon, tuesdayAfternoon, wednesdayAfternoon, thursdayAfternoon, fridayAfternoon, saturdayAfternoon, sundayEvening, mondayEvening, tuesdayEvening, wednesdayEvening, thursdayEvening, fridayEvening, saturdayEvening, sundayNight, mondayNight, tuesdayNight, wednesdayNight, thursdayNight, fridayNight, saturdayNight)
+""" % (sundayMorningNormalized, sundayAfternoonNormalized, sundayEveningNormalized, sundayNightNormalized, mondayMorningNormalized, mondayAfternoonNormalized, mondayEveningNormalized, mondayNightNormalized, tuesdayMorningNormalized, tuesdayAfternoonNormalized, tuesdayEveningNormalized, tuesdayNightNormalized, wednesdayMorningNormalized, wednesdayAfternoonNormalized, wednesdayEveningNormalized, wednesdayNightNormalized, thursdayMorningNormalized, thursdayAfternoonNormalized, thursdayEveningNormalized, thursdayNightNormalized, fridayMorningNormalized, fridayAfternoonNormalized, fridayEveningNormalized, fridayNightNormalized, saturdayMorningNormalized, saturdayAfternoonNormalized, saturdayEveningNormalized, saturdayNightNormalized)
 
 
 	html += """

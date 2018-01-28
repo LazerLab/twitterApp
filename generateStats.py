@@ -369,6 +369,21 @@ def getPopularHours(times):
 # the user is more active on Twitter
 #------------------------------
 def getPopularHoursNormalized(times):
+	# date of the 1st tweet on the list
+        firstTweet = times[-1] # Mon Jan 16 06:56:18 -0800 2017
+	firstTweet = re.sub('\+.{4}\s', '', firstTweet) # remove timezone. It can create problems when converting to datetime
+	firstTweet = datetime.strptime(firstTweet, '%a %b %d %X %Y')
+
+	# date of the last tweet on the list
+	lastTweet = times[1]
+	lastTweet = re.sub('\+.{4}\s', '', lastTweet) # remove timezone. It can create problems when converting to datetime
+	lastTweet = datetime.strptime(lastTweet, '%a %b %d %X %Y')
+
+	#calculate weets between 1st and last tweets
+	dateDelta = lastTweet - firstTweet
+	weeks = dateDelta.days/7.000
+
+
 	hour = [11,12]  # the hour is the 11,12 elements in Mon Mar 28 15:59:45 +0000 2011
 	hours = []
 	hourFormat = {'01': '1 A.M.', '02': '2 A.M.', '03': '3 A.M.', '04': '4 A.M.', '05': '5 A.M.', '06': '6 A.M.', '07': '7 A.M.', '08': '8 A.M.', '09': '9 A.M.', '10': '10 A.M.', '11': '11 A.M.', '12': 'noon', '13': '1 P.M.', '14': '2 P.M.', '15': '3 P.M.', '16': '4 P.M.', '17': '5 P.M.', '18': '6 P.M.', '19': '7 P.M.', '20': '8 P.M.', '21': '9 P.M.', '22': '10 P.M.', '23': '11 P.M.', '00': 'midnight'} 
@@ -492,5 +507,6 @@ def getPopularHoursNormalized(times):
 
         popularHour =  str(max(set(hours), key=hours.count))
         popularHour = hourFormat[str(popularHour)]
+	
 
-	return len(sundayMorning), len(sundayAfternoon), len(sundayEvening), len(sundayNight), len(mondayMorning), len(mondayAfternoon), len(mondayEvening), len(mondayNight), len(tuesdayMorning), len(tuesdayAfternoon), len(tuesdayEvening), len(tuesdayNight), len(wednesdayMorning), len(wednesdayAfternoon), len(wednesdayEvening), len(wednesdayNight), len(thursdayMorning), len(thursdayAfternoon), len(thursdayEvening), len(thursdayNight), len(fridayMorning), len(fridayAfternoon), len(fridayEvening), len(fridayNight), len(saturdayMorning), len(saturdayAfternoon), len(saturdayEvening), len(saturdayNight), popularHour
+	return len(sundayMorning)/weeks, len(sundayAfternoon)/weeks, len(sundayEvening)/weeks, len(sundayNight)/weeks, len(mondayMorning)/weeks, len(mondayAfternoon)/weeks, len(mondayEvening)/weeks, len(mondayNight)/weeks, len(tuesdayMorning)/weeks, len(tuesdayAfternoon)/weeks, len(tuesdayEvening)/weeks, len(tuesdayNight)/weeks, len(wednesdayMorning)/weeks, len(wednesdayAfternoon)/weeks, len(wednesdayEvening)/weeks, len(wednesdayNight)/weeks, len(thursdayMorning)/weeks, len(thursdayAfternoon)/weeks, len(thursdayEvening)/weeks, len(thursdayNight)/weeks, len(fridayMorning)/weeks, len(fridayAfternoon)/weeks, len(fridayEvening)/weeks, len(fridayNight)/weeks, len(saturdayMorning)/weeks, len(saturdayAfternoon)/weeks, len(saturdayEvening)/weeks, len(saturdayNight)/weeks, popularHour
