@@ -365,6 +365,87 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
 """ % (sundayMorning, mondayMorning, tuesdayMorning, wednesdayMorning, thursdayMorning, fridayMorning, saturdayMorning, sundayAfternoon, mondayAfternoon, tuesdayAfternoon, wednesdayAfternoon, thursdayAfternoon, fridayAfternoon, saturdayAfternoon, sundayEvening, mondayEvening, tuesdayEvening, wednesdayEvening, thursdayEvening, fridayEvening, saturdayEvening, sundayNight, mondayNight, tuesdayNight, wednesdayNight, thursdayNight, fridayNight, saturdayNight)
 
 
+
+	#======================================================================	
+	# Python Heredoc for Stacked Bar Chart 2 - Normalized Hours
+	#======================================================================	
+	html += """
+        <!-- ================================================ -->
+        <!--   Begin Stacked Bar Chart Normalized JavaScript  -->
+        <!-- ================================================ -->
+	<script>
+        var barChartData = {
+            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            datasets: [{
+                label: 'Morning (6-11 AM)',
+                backgroundColor: window.chartColors.orange,
+                stack: 'Stack 0',
+                data: [%s, %s, %s, %s, %s, %s, %s]
+            }, {
+                label: 'Afternoon (12-5 PM)',
+                backgroundColor: window.chartColors.blue,
+                stack: 'Stack 0',
+                data: [%s, %s, %s, %s, %s, %s, %s]
+            }, {
+                label: 'Evening (6-11 PM)',
+                backgroundColor: window.chartColors.green,
+                stack: 'Stack 0',
+                data: [%s, %s, %s, %s, %s, %s, %s]
+            }, {
+                label: 'Night (Midnight-5 AM)',
+                backgroundColor: window.chartColors.purple,
+                stack: 'Stack 0',
+                data: [%s, %s, %s, %s, %s, %s, %s]
+            }]
+
+        };
+
+	function drawStackedChartNormalized() {
+            var ctx = document.getElementById("stackedBarChartNormalized").getContext("2d");
+            window.myBar = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                    title:{
+                        display:true,
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    responsive: true,
+		    maintainAspectRatio: false,
+                    scales: {
+                        xAxes: [{
+                            stacked: true,
+			    ticks: {
+             			   beginAtZero: true
+            			   }
+                        }],
+                        yAxes: [{
+                            stacked: true,
+			    ticks: {
+             			   beginAtZero: true
+            			   }
+                        }]
+                    }
+                }
+            });
+        };
+
+	</script>
+
+
+
+
+
+
+        <!-- ================================================== -->
+        <!--     End Stacked Bar Chart Normalized JavaScript    -->
+        <!-- ================================================== -->
+""" % (sundayMorning, mondayMorning, tuesdayMorning, wednesdayMorning, thursdayMorning, fridayMorning, saturdayMorning, sundayAfternoon, mondayAfternoon, tuesdayAfternoon, wednesdayAfternoon, thursdayAfternoon, fridayAfternoon, saturdayAfternoon, sundayEvening, mondayEvening, tuesdayEvening, wednesdayEvening, thursdayEvening, fridayEvening, saturdayEvening, sundayNight, mondayNight, tuesdayNight, wednesdayNight, thursdayNight, fridayNight, saturdayNight)
+
+
 	html += """
 
 
@@ -380,7 +461,8 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
 		drawBarChart("barChart2Canvas",horizontalBarChart2Data);
 		drawBarChart("barChart3Canvas",horizontalBarChart3Data);
 		drawBarChart("barChart4Canvas",horizontalBarChart4Data);
-		drawStackedChart()
+		drawStackedChart();
+		drawStackedChartNormalized();
 	}
     </script>
 
@@ -433,6 +515,15 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
         <p><center>
 	   <div style="position: relative; height:25vh; width: 70vw; border: 0px solid black"> 
               <canvas id="stackedBarChart"></canvas>
+           </div>
+        </center>
+
+	<p> <center><div class="section-header" style="position: relative; height:8vh; width: 60vw; border: 0px solid black"><br> Here is your normalized data... </div>
+	</center>
+	<!-- Stacked Bar Chart Normalized -->
+        <p><center>
+	   <div style="position: relative; height:25vh; width: 70vw; border: 0px solid black"> 
+              <canvas id="stackedBarChartNormalized"></canvas>
            </div>
         </center>
 	<pre>
