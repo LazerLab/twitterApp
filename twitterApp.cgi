@@ -105,7 +105,7 @@ if action=='step3':
 
 
 # STEP 5: Writes tweets to a json file:
-	jsonFileName = '/www/default/docs/twitterApp/json/' + screenName + '_web.json.gz'
+	jsonFileName = '/www/default/docs/twitterApp/json/' + screenName + '.json.gz'
 	numberTweets = getTweets(client_key, client_secret, resource_owner_key, resource_owner_secret, screenName, jsonFileName)
 
 	if numberTweets == 0:

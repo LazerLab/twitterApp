@@ -21,7 +21,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
 	total_count, tweet_count, retweet_count, reply_count, list_usersRetweeted, list_usersReplied, list_usersMentioned, list_hashtags, list_times = lists(jsonFileName, tzinfo_name) 
 
 	top5Retweeted, mostCommonRetweeted, mostCommonRetweetedValue = topFiveRetweeted(list_usersRetweeted)	
-	top5Replied, mostCommonReplied, mostCommonRepliedValue = topFiveReplied(list_usersReplied)	
+	top5Replied, mostCommonReplied, mostCommonRepliedValue = topFiveReplied(list_usersReplied, screenName)	
 
 	mentions, mostCommonMentioned, mostCommonMentionedValue  = topFiveMentioned(list_usersMentioned)
 
@@ -390,7 +390,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
 	<div dir="auto">
 	<br>
 	<h1> We've found some interesting data for @%s... </h1>
-	<h2> We analyzed %s tweets since %s. %s were retweets and %s were replies. </h2> 
+	<h2> We analyzed %s tweets going back to %s. <br> %s were retweets and %s were replies. </h2> 
         <center>
 	   <div id="canvas-holder" style="position: relative; height:20vh; width: 40vw; border:0px solid black">
 		<canvas id="chart-area" width="200" height="200"></canvas>

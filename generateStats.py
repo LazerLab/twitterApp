@@ -135,7 +135,8 @@ def topFiveRetweeted(list_users):
 # topFiveReplied: returns the 5 screen names 
 # of accounts the user retweets to the most
 #------------------------------
-def topFiveReplied(list_users):
+def topFiveReplied(list_users, screenName):
+	list_users = list(filter(lambda x: x!= screenName, list_users))
 	data = Counter(list_users)
 	counter = 1
 	mostCommon_screenName = []
@@ -146,8 +147,6 @@ def topFiveReplied(list_users):
 		counter += 1
 	if len(mostCommon_screenName) >= 1:
 		mostCommon = ['<center><div class="section-header" style="position: relative; height:3vh; width: 80vw; border: 0px solid black"><br> You frequently reply to:']
-		#for x in mostCommon_screenName:
-		#	mostCommon.append('<br>' + str(counter) + '. ' + x)
 	else:
 		mostCommon = ['<center><div class="section-header" style="position: relative; height:3vh; width: 80vw; border: 0px solid black"><br> Replying is not your thing. That&#39;s ok!']
 	mostCommon.append('</div>\n</div>\n</center>')
@@ -212,7 +211,7 @@ def numberRetweets(list_users):
 #------------------------------
 def getPopularWeekdays(times):
 	# date of the 1st tweet on the list
-        firstTweet = times[1] # Mon Jan 16 06:56:18 -0800 2017
+        firstTweet = times[-1] # Mon Jan 16 06:56:18 -0800 2017
         dateFirstTweet = firstTweet.split() # ['Mon', 'Jan', '16', '06:56:18', '-0800', '2017']
         dateFirstTweet = dateFirstTweet[1] + ' ' + dateFirstTweet[2] + ', ' + dateFirstTweet[5] # Jan 16, 2017
 
