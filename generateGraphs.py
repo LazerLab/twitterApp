@@ -512,7 +512,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
            </div>
         </center>
 
-	<p> <center><div class="section-header" style="position: relative; height:8vh; width: 60vw; border: 0px solid black"><br> Here is your normalized data... </div>
+	<p> <center><div class="section-header" style="position: relative; height:3vh; width: 60vw; border: 0px solid black"><br> Here is your normalized data... </div>
 	</center>
 	<!-- Stacked Bar Chart Normalized -->
         <p><center>

@@ -371,12 +371,12 @@ def getPopularHours(times):
 def getPopularHoursNormalized(times):
 	# date of the 1st tweet on the list
         firstTweet = times[-1] # Mon Jan 16 06:56:18 -0800 2017
-	firstTweet = re.sub('\+.{4}\s', '', firstTweet) # remove timezone. It can create problems when converting to datetime
+	firstTweet = re.sub('[\+-].{4}\s', '', firstTweet) # remove timezone. It can create problems when converting to datetime
 	firstTweet = datetime.strptime(firstTweet, '%a %b %d %X %Y')
 
 	# date of the last tweet on the list
 	lastTweet = times[1]
-	lastTweet = re.sub('\+.{4}\s', '', lastTweet) # remove timezone. It can create problems when converting to datetime
+	lastTweet = re.sub('[\+-].{4}\s', '', lastTweet) # remove timezone. It can create problems when converting to datetime
 	lastTweet = datetime.strptime(lastTweet, '%a %b %d %X %Y')
 
 	#calculate weets between 1st and last tweets
