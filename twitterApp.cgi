@@ -37,7 +37,11 @@ print 'Content-type: text/html\n\n'
 
 form = cgi.FieldStorage()
 
-hostname = 'ec2-54-146-3-85.compute-1.amazonaws.com'
+#hostname = 'ec2-54-146-3-85.compute-1.amazonaws.com'
+hostname = 'www.codewithaheart.com'
+
+#pathToAppDir = '/www/default/docs/' 
+pathToAppDir = '/www/codewithaheart.com/docs/'
 
 client_key = '0XjfIpYCYq9Ve2FLaO5MOVoEv'
 client_secret = '2ne1n8nqsCg6eN20RPg0Nbuyt83coyTSGYu6SahqKnPePd8XYF' 
@@ -100,12 +104,12 @@ if action=='step3':
 		
 
 	# saving keys to file:
-	keyToFile = open('/www/default/docs/twitterApp/kdata/' + screenName + '.txt', 'w') 
+	keyToFile = open(pathToAppDir + 'twitterApp/kdata/' + screenName + '.txt', 'w') 
 	keyToFile.write(screenName + ',' + resource_owner_key + ',' + resource_owner_secret + '\n') 
 
 
 # STEP 5: Writes tweets to a json file:
-	jsonFileName = '/www/default/docs/twitterApp/json/' + screenName + '.json.gz'
+	jsonFileName = pathToAppDir + 'twitterApp/json/' + screenName + '.json.gz'
 	numberTweets = getTweets(client_key, client_secret, resource_owner_key, resource_owner_secret, screenName, jsonFileName)
 
 	if numberTweets == 0:
@@ -131,7 +135,7 @@ if action == "testing":
 	Select a json file to process:
 	<br><br> 
 	"""
-	jsonPath = "/www/default/docs/twitterApp/json"
+	jsonPath = pathToAppDir + "twitterApp/json"
 	jsonFiles = [f for f in listdir(jsonPath) if isfile(join(jsonPath, f))]
 	for file in jsonFiles:
 		print '<br><input type="radio" name="jsonFile" value="' + file + '">' + file 
@@ -146,7 +150,7 @@ if action == "testing":
  	"""
 
 if action == "processTestFile":
-	jsonPath = "/www/default/docs/twitterApp/json"
+	jsonPath = pathToAppDir + "twitterApp/json"
 	screenName = str(form["jsonFile"].value).replace('.json.gz', '')
 	jsonFileName = jsonPath + "/" + str(form["jsonFile"].value)
 	

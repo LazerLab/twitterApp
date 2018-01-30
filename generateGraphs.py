@@ -530,7 +530,8 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
 	""" % (screenName,total_count, dateFirstTweet, retweet_count,reply_count, top5Retweeted, top5Replied, mentions, hashtags, popularDay, popularHour, tzinfo_name)
 
 	print html
-
-	debugFile = open('/www/default/docs/twitterApp/debug/' + screenName + '.txt', 'a') 
+	
+	debugFile = open('/www/codewithaheart/docs/twitterApp/debug/' + screenName + '.txt', 'a') 
+	#debugFile = open('/www/default/docs/twitterApp/debug/' + screenName + '.txt', 'a') 
 	debugFile.write(html + '\n\n\n\n\n')
 
