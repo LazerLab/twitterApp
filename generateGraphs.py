@@ -16,16 +16,17 @@ import os
 from generateStats import *
 
 
-# call functions that contains user's processed data
 def generateGraphs(screenName, jsonFileName, tzinfo_name):
+	# calling functions that contains user's processed data
 	total_count, tweet_count, retweet_count, reply_count, list_usersRetweeted, list_usersReplied, list_usersMentioned, list_hashtags, list_times = lists(jsonFileName, tzinfo_name) 
 
-	top5Retweeted, mostCommonRetweeted, mostCommonRetweetedValue = topFiveRetweeted(list_usersRetweeted)	
-	top5Replied, mostCommonReplied, mostCommonRepliedValue = topFiveReplied(list_usersReplied, screenName)	
+	top10Retweeted, mostCommonRetweeted, mostCommonRetweetedValue = topTenRetweeted(list_usersRetweeted)	
+
+	top10Replied, mostCommonReplied, mostCommonRepliedValue = topTenReplied(list_usersReplied, screenName)	
 
 	mentions, mostCommonMentioned, mostCommonMentionedValue  = topFiveMentioned(list_usersMentioned)
 
-	hashtags, mostCommonHashtag, mostCommonHashtagValue = topFiveHashtags(list_hashtags)
+	hashtags, mostCommonHashtag, mostCommonHashtagValue = topTenHashtags(list_hashtags)
 
 	popularDay, dateFirstTweet = getPopularWeekdays(list_times)
 
@@ -105,10 +106,10 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
         <!--   Begin Bar Chart1 JavaScript    -->
         <!-- ================================ -->
     <script type="text/javascript">
-        var twitterHandles = ["%s", "%s", "%s", "%s", "%s"];
+        var twitterHandles = ["%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s"];
         var color = Chart.helpers.color;
         var horizontalBarChart1Data = {
-            labels: ["%s", "%s", "%s", "%s", "%s"],
+            labels: ["%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s"],
             datasets: [{
                 label: 'retweets',
                 backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
@@ -117,7 +118,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
                 //borderColor: window.chartColors.blue,
                 //borderColor: window.chartColors.blue,
                 borderWidth: 1,
-                data: [%s, %s, %s, %s, %s]
+                data: [%s, %s, %s, %s, %s, %s, %s, %s, %s, %s]
             }]
 
         };
@@ -179,7 +180,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
         <!-- ================================ -->
         <!--     End Bar Chart1 JavaScript    -->
         <!-- ================================ -->
-""" % (mostCommonRetweeted[0], mostCommonRetweeted[1], mostCommonRetweeted[2], mostCommonRetweeted[3], mostCommonRetweeted[4], mostCommonRetweeted[0], mostCommonRetweeted[1], mostCommonRetweeted[2], mostCommonRetweeted[3], mostCommonRetweeted[4], mostCommonRetweetedValue[0], mostCommonRetweetedValue[1], mostCommonRetweetedValue[2], mostCommonRetweetedValue[3], mostCommonRetweetedValue[4])
+""" % (mostCommonRetweeted[0], mostCommonRetweeted[1], mostCommonRetweeted[2], mostCommonRetweeted[3], mostCommonRetweeted[4], mostCommonRetweeted[5], mostCommonRetweeted[6], mostCommonRetweeted[7], mostCommonRetweeted[8], mostCommonRetweeted[9], mostCommonRetweeted[0], mostCommonRetweeted[1], mostCommonRetweeted[2], mostCommonRetweeted[3], mostCommonRetweeted[4], mostCommonRetweeted[5], mostCommonRetweeted[6], mostCommonRetweeted[7], mostCommonRetweeted[8], mostCommonRetweeted[9], mostCommonRetweetedValue[0], mostCommonRetweetedValue[1], mostCommonRetweetedValue[2], mostCommonRetweetedValue[3], mostCommonRetweetedValue[4], mostCommonRetweetedValue[5], mostCommonRetweetedValue[6], mostCommonRetweetedValue[7], mostCommonRetweetedValue[8], mostCommonRetweetedValue[9])
 
 
 
@@ -193,16 +194,16 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
         <!--   Begin Bar Chart2 JavaScript    -->
         <!-- ================================ -->
     <script type="text/javascript">
-        var twitterHandles2 = ["%s", "%s", "%s", "%s", "%s"];
+        var twitterHandles2 = ["%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s"];
         var color = Chart.helpers.color;
         var horizontalBarChart2Data = {
-            labels: ["%s", "%s", "%s", "%s", "%s"],
+            labels: ["%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s"],
             datasets: [{
                 label: 'replies',
                 backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
                 //borderColor: window.chartColors.red,
                 borderWidth: 1,
-                data: [%s, %s, %s, %s, %s ]
+                data: [%s, %s, %s, %s, %s, %s, %s, %s, %s, %s]
             }]
 
         };
@@ -212,7 +213,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
         <!-- ================================ -->
         <!--     End Bar Chart2 JavaScript    -->
         <!-- ================================ -->
-""" % (mostCommonReplied[0], mostCommonReplied[1], mostCommonReplied[2], mostCommonReplied[3], mostCommonReplied[4], mostCommonReplied[0], mostCommonReplied[1], mostCommonReplied[2], mostCommonReplied[3], mostCommonReplied[4], mostCommonRepliedValue[0], mostCommonRepliedValue[1], mostCommonRepliedValue[2], mostCommonRepliedValue[3], mostCommonRepliedValue[4])
+""" % (mostCommonReplied[0], mostCommonReplied[1], mostCommonReplied[2], mostCommonReplied[3], mostCommonReplied[4], mostCommonReplied[5], mostCommonReplied[6], mostCommonReplied[7], mostCommonReplied[8], mostCommonReplied[9], mostCommonReplied[0], mostCommonReplied[1], mostCommonReplied[2], mostCommonReplied[3], mostCommonReplied[4], mostCommonReplied[5], mostCommonReplied[6], mostCommonReplied[7], mostCommonReplied[8], mostCommonReplied[9], mostCommonRepliedValue[0], mostCommonRepliedValue[1], mostCommonRepliedValue[2], mostCommonRepliedValue[3], mostCommonRepliedValue[4], mostCommonRepliedValue[5], mostCommonRepliedValue[6], mostCommonRepliedValue[7], mostCommonRepliedValue[8], mostCommonRepliedValue[9])
 
 
 
@@ -256,16 +257,16 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
         <!--   Begin Bar Chart4 JavaScript    -->
         <!-- ================================ -->
     <script type="text/javascript">
-        var twitterHandles4 = ["%s","%s","%s","%s","%s"];
+        var twitterHandles4 = ["%s","%s","%s","%s","%s","%s","%s","%s","%s","%s"];
         var color = Chart.helpers.color;
         var horizontalBarChart4Data = {
-            labels: ["%s", "%s", "%s", "%s", "%s"],
+            labels: ["%s", "%s", "%s", "%s", "%s", "%s", "%s","%s","%s","%s"],
             datasets: [{
                 label: 'hashtags',
                 backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
                 //borderColor: window.chartColors.red,
                 borderWidth: 1,
-                data: [%s, %s, %s, %s, %s]
+                data: [%s, %s, %s, %s, %s, %s, %s, %s, %s, %s]
             }]
 
         };
@@ -276,7 +277,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
         <!-- ================================ -->
         <!--     End Bar Chart4 JavaScript    -->
         <!-- ================================ -->
-""" % (mostCommonHashtag[0], mostCommonHashtag[1], mostCommonHashtag[2], mostCommonHashtag[3], mostCommonHashtag[4], mostCommonHashtag[0], mostCommonHashtag[1], mostCommonHashtag[2], mostCommonHashtag[3], mostCommonHashtag[4], mostCommonHashtagValue[0], mostCommonHashtagValue[1], mostCommonHashtagValue[2], mostCommonHashtagValue[3], mostCommonHashtagValue[4])
+""" % (mostCommonHashtag[0], mostCommonHashtag[1], mostCommonHashtag[2], mostCommonHashtag[3], mostCommonHashtag[4], mostCommonHashtag[5], mostCommonHashtag[6], mostCommonHashtag[7], mostCommonHashtag[8], mostCommonHashtag[9], mostCommonHashtag[0], mostCommonHashtag[1], mostCommonHashtag[2], mostCommonHashtag[3], mostCommonHashtag[4], mostCommonHashtag[5], mostCommonHashtag[6], mostCommonHashtag[7], mostCommonHashtag[8], mostCommonHashtag[9], mostCommonHashtagValue[0], mostCommonHashtagValue[1], mostCommonHashtagValue[2], mostCommonHashtagValue[3], mostCommonHashtagValue[4], mostCommonHashtagValue[5], mostCommonHashtagValue[6], mostCommonHashtagValue[7], mostCommonHashtagValue[8], mostCommonHashtagValue[9])
 
 
 	#======================================================================	
@@ -527,7 +528,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
 	</div>
 	</body>
 	</html>
-	""" % (screenName,total_count, dateFirstTweet, retweet_count,reply_count, top5Retweeted, top5Replied, mentions, hashtags, popularDay, popularHour, tzinfo_name)
+	""" % (screenName,total_count, dateFirstTweet, retweet_count,reply_count, top10Retweeted, top10Replied, mentions, hashtags, popularDay, popularHour, tzinfo_name)
 
 	print html
 	

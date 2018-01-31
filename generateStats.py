@@ -106,42 +106,40 @@ def lists(jsonFileName, tzinfo_name):
 
 
 #------------------------------
-# topFiveRetweeted: returns the 5 screen names 
+# topTenRetweeted: returns the 10 screen names 
 # of accounts the user retweets the most
 #------------------------------
-def topFiveRetweeted(list_users):
+def topTenRetweeted(list_users):
 	data = Counter(list_users)
 	counter = 1
 	mostCommon_screenName = []
 	mostCommon_value = []
-	for x in data.most_common(5):
+	for x in data.most_common(10):
 		mostCommon_screenName.append(x[0])
 		mostCommon_value.append(x[1])
 		counter += 1
 	if len(mostCommon_screenName) >= 1:
 		mostCommon = ['<center><div class="section-header" style="position: relative; height:3vh; width: 80vw; border: 0px solid black"><br> Here are the people you retweet the most:']
-		#for x in mostCommon_screenName:
-		#	mostCommon.append('<br>' + str(counter) + '. ' + x)
 	else:
 		mostCommon = ['<center><div class="section-header" style="position: relative; height:3vh; width: 80vw; border: 0px solid black"><br> Well, it seems like you don&#39;t retweet a lot.']
 	mostCommon.append('</div>\n</center>')
-	mostCommon_screenName += [' '] * (5 - len(mostCommon_screenName))
-	mostCommon_value += [0] * (5 - len(mostCommon_value))
+	mostCommon_screenName += [' '] * (10 - len(mostCommon_screenName))	#fills the list with ' ' until it has 10 items
+	mostCommon_value += [0] * (10 - len(mostCommon_value))		#fills the list with 0 until it has 10 items
 	return ' '.join(mostCommon), mostCommon_screenName, mostCommon_value
 
 
 
 #------------------------------
-# topFiveReplied: returns the 5 screen names 
+# topTenReplied: returns the 10 screen names 
 # of accounts the user retweets to the most
 #------------------------------
-def topFiveReplied(list_users, screenName):
+def topTenReplied(list_users, screenName):
 	list_users = list(filter(lambda x: x!= screenName, list_users))
 	data = Counter(list_users)
 	counter = 1
 	mostCommon_screenName = []
 	mostCommon_value = []
-	for x in data.most_common(5):
+	for x in data.most_common(10):
 		mostCommon_screenName.append(x[0])
 		mostCommon_value.append(x[1])
 		counter += 1
@@ -150,8 +148,8 @@ def topFiveReplied(list_users, screenName):
 	else:
 		mostCommon = ['<center><div class="section-header" style="position: relative; height:3vh; width: 80vw; border: 0px solid black"><br> Replying is not your thing. That&#39;s ok!']
 	mostCommon.append('</div>\n</div>\n</center>')
-	mostCommon_screenName += [' '] * (5 - len(mostCommon_screenName))
-	mostCommon_value += [0] * (5 - len(mostCommon_value))
+	mostCommon_screenName += [' '] * (10 - len(mostCommon_screenName))	#fills the list with ' ' until it has 10 items
+	mostCommon_value += [0] * (10 - len(mostCommon_value))	#fills the list with 0 until it has 10 items
 	return ' '.join(mostCommon), mostCommon_screenName, mostCommon_value
 
 #------------------------------
@@ -178,15 +176,15 @@ def topFiveMentioned(list_users):
 
 
 #------------------------------
-# topFiveHashtags: returns the 5 most common
+# topTenHashtags: returns the 10 most common
 # hashtags mentioned by the user
 #------------------------------
-def topFiveHashtags(list):
+def topTenHashtags(list):
 	data = Counter(list)
 	counter = 1
 	mostCommon_hashtag = []
 	mostCommon_value = []
-	for x in data.most_common(5):
+	for x in data.most_common(10):
 		if counter >= 1:
 			mostCommon_hashtag.append(x[0])
 			mostCommon_value.append(x[1])
@@ -196,13 +194,9 @@ def topFiveHashtags(list):
 	else:
 		mostCommon = ['<center><div class="section-header" style="position: relative; height:3vh; width: 80vw; border: 0px solid black"><br> We didn&#39;t find any hashtags in your posts']
 	mostCommon.append('</div>\n</center>')
-	mostCommon_hashtag += [' '] * (5 - len(mostCommon_hashtag))
-	mostCommon_value += [0] * (5 - len(mostCommon_value))
+	mostCommon_hashtag += [' '] * (10 - len(mostCommon_hashtag))	#fills the list with ' ' until it has 10 items
+	mostCommon_value += [0] * (10 - len(mostCommon_value))	#fills the list with 0 until it has 10 items
 	return ' '.join(mostCommon), mostCommon_hashtag, mostCommon_value
-
-def numberRetweets(list_users):
-	number = len(list_users)
-	return str(number)
 
 
 #------------------------------
@@ -381,7 +375,7 @@ def getPopularHoursNormalized(times):
 
 	#calculate weets between 1st and last tweets
 	dateDelta = lastTweet - firstTweet
-	weeks = dateDelta.days/7.000
+	weeks = dateDelta.days/7.00
 
 
 	hour = [11,12]  # the hour is the 11,12 elements in Mon Mar 28 15:59:45 +0000 2011
