@@ -64,7 +64,7 @@ The Twitter App retrieves a user's tweets via the Twitter API and returns stats 
 
 ```
 /www/default/docs/twitterApp/	index.html		[Initial Page]
-				twitterApp.cgi		[Manage oauth flow and calls functions that analyze and display data]
+				twitterApp.cgi		[Manages oauth flow and calls functions that analyze and display data]
 				collectTweets.py	[Retrieves tweets data from Twitter API, writes data to file]
 				generateStats.py	[Analyses twitter data, returns raw data and some HTML]
 				generateGraphs.py	[Generate graphs, returns HTML for results page, saves HTML to debug file]
