@@ -12,13 +12,14 @@ The Twitter App retrieves a user's tweets via the Twitter API and returns stats 
 ## GENERAL OVERVIEW:
 - redirects user to Twitter authorization page and collects keys to access user data
 - retrieves and analyses user data
-- displays:	total number of tweets collected
-		number of tweets, retweets, replies
-		10 people the user retweets the most
-		10 people the user replies to the most
-		5 people the user mentions the most
-		10 hashtags the user uses the most
-		time of day and day of week the user is most active
+- displays:	
+	- total number of tweets collected
+	- number of tweets, retweets, replies
+	- 10 people the user retweets the most
+	- 10 people the user replies to the most
+	- 5 people the user mentions the most
+	- 10 hashtags the user uses the most
+	- time of day and day of week the user is most active
 - saves .json file with tweets and .txt file with api keys for future use
 
 ## PROGRAM FLOW:
