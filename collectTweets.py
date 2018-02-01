@@ -4,9 +4,7 @@
 # file:                 collectTweets.py 
 # date:                 Thu Jan 25 00:31:03 GMT 2018
 # author(s):            Thalita Coleman  <thalitaneu@gmail.com>
-# abstract:             Obtains user twitter keys, calls functions tha retrieves 
-#			tweets data from Twitter API, writes data to file, 
-#			analyses results and dysplays on webpage.
+# abstract:             Retrieves tweets data from Twitter API, writes data to file. 
 #------------------------------------------------------------------------------ 
 # requirements: python 2.7
 #------------------------------------------------------------------------------ 

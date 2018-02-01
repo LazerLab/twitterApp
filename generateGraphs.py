@@ -6,6 +6,7 @@
 # author(s):            Thalita Coleman  <thalitaneu@gmail.com>
 # abstract:             Call functions that contains user's processed data and
 #			generates javascript graphs.
+#			Returns raw data and HTML.
 #------------------------------------------------------------------------------
 # requirements: python 2.7, generateStats.py 
 #------------------------------------------------------------------------------
