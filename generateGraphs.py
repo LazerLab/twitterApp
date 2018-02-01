@@ -33,7 +33,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
 
 	sundayMorning, sundayAfternoon, sundayEvening, sundayNight, mondayMorning, mondayAfternoon, mondayEvening, mondayNight, tuesdayMorning, tuesdayAfternoon, tuesdayEvening, tuesdayNight, wednesdayMorning, wednesdayAfternoon, wednesdayEvening, wednesdayNight, thursdayMorning, thursdayAfternoon, thursdayEvening, thursdayNight, fridayMorning, fridayAfternoon, fridayEvening, fridayNight, saturdayMorning, saturdayAfternoon, saturdayEvening, saturdayNight, popularHour = getPopularHours(list_times)
 
-	sundayMorningNormalized, sundayAfternoonNormalized, sundayEveningNormalized, sundayNightNormalized, mondayMorningNormalized, mondayAfternoonNormalized, mondayEveningNormalized, mondayNightNormalized, tuesdayMorningNormalized, tuesdayAfternoonNormalized, tuesdayEveningNormalized, tuesdayNightNormalized, wednesdayMorningNormalized, wednesdayAfternoonNormalized, wednesdayEveningNormalized, wednesdayNightNormalized, thursdayMorningNormalized, thursdayAfternoonNormalized, thursdayEveningNormalized, thursdayNightNormalized, fridayMorningNormalized, fridayAfternoonNormalized, fridayEveningNormalized, fridayNightNormalized, saturdayMorningNormalized, saturdayAfternoonNormalized, saturdayEveningNormalized, saturdayNightNormalized, popularHour = getPopularHoursNormalized(list_times)
+	weeks = getPopularHoursNormalized(list_times)
 
 	#======================================================================	
  	#   Python HereDoc for PieChart
@@ -366,9 +366,10 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
 	# Python Heredoc for Stacked Bar Chart 2 - Normalized Hours
 	#======================================================================	
 	html += """
-        <!-- ================================================ -->
-        <!--   Begin Stacked Bar Chart Normalized JavaScript  -->
-        <!-- ================================================ -->
+        <!-- ================================================== -->
+        <!--   Begin Stacked Normalized Bar Chart JavaScript    -->
+        <!-- ================================================== -->
+
 	<script>
         var barChartDataNormalized = {
             labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
@@ -432,14 +433,10 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
 	</script>
 
 
-
-
-
-
         <!-- ================================================== -->
         <!--     End Stacked Bar Chart Normalized JavaScript    -->
         <!-- ================================================== -->
-""" % (sundayMorningNormalized, sundayAfternoonNormalized, sundayEveningNormalized, sundayNightNormalized, mondayMorningNormalized, mondayAfternoonNormalized, mondayEveningNormalized, mondayNightNormalized, tuesdayMorningNormalized, tuesdayAfternoonNormalized, tuesdayEveningNormalized, tuesdayNightNormalized, wednesdayMorningNormalized, wednesdayAfternoonNormalized, wednesdayEveningNormalized, wednesdayNightNormalized, thursdayMorningNormalized, thursdayAfternoonNormalized, thursdayEveningNormalized, thursdayNightNormalized, fridayMorningNormalized, fridayAfternoonNormalized, fridayEveningNormalized, fridayNightNormalized, saturdayMorningNormalized, saturdayAfternoonNormalized, saturdayEveningNormalized, saturdayNightNormalized)
+""" % (sundayMorning/weeks, mondayMorning/weeks, tuesdayMorning/weeks, wednesdayMorning/weeks, thursdayMorning/weeks, fridayMorning/weeks, saturdayMorning/weeks, sundayAfternoon/weeks, mondayAfternoon/weeks, tuesdayAfternoon/weeks, wednesdayAfternoon/weeks, thursdayAfternoon/weeks, fridayAfternoon/weeks, saturdayAfternoon/weeks, sundayEvening/weeks, mondayEvening/weeks, tuesdayEvening/weeks, wednesdayEvening/weeks, thursdayEvening/weeks, fridayEvening/weeks, saturdayEvening/weeks, sundayNight/weeks, mondayNight/weeks, tuesdayNight/weeks, wednesdayNight/weeks, thursdayNight/weeks, fridayNight/weeks, saturdayNight/weeks)
 
 
 	html += """
