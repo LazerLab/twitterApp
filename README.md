@@ -55,8 +55,8 @@ The Twitter App retrieves a user's tweets via the Twitter API and returns stats 
 	YES				NO
 (05)	Results page displayed		No Tweets page displayed	(06)
 	[twitterApp.cgi,		[twitterApp.cgi,
-	collectTweets.py, 		noTweets.html]
-	generateGraphs.py]
+	generateGraphs.py] 		noTweets.html]
+	
 ```
 
 
