@@ -369,13 +369,15 @@ def getPopularHoursNormalized(times):
 	firstTweet = datetime.strptime(firstTweet, '%a %b %d %X %Y')
 
 	# date of the last tweet on the list
-	lastTweet = times[1]
+	lastTweet = times[0]
 	lastTweet = re.sub('[\+-].{4}\s', '', lastTweet) # remove timezone. It can create problems when converting to datetime
 	lastTweet = datetime.strptime(lastTweet, '%a %b %d %X %Y')
 
 	#calculate weets between 1st and last tweets
 	dateDelta = lastTweet - firstTweet
 	weeks = dateDelta.days/7.00
+	if weeks < 1:
+		weeks = 1
 
 
 	hour = [11,12]  # the hour is the 11,12 elements in Mon Mar 28 15:59:45 +0000 2011

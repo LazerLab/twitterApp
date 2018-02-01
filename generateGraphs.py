@@ -533,7 +533,7 @@ def generateGraphs(screenName, jsonFileName, tzinfo_name):
 
 	print html
 	
-	debugFile = open('/www/codewithaheart/docs/twitterApp/debug/' + screenName + '.txt', 'a') 
-	#debugFile = open('/www/default/docs/twitterApp/debug/' + screenName + '.txt', 'a') 
+	debugFile = open('/www/codewithaheart.com/docs/twitterApp/debug/' + str(screenName) + '.txt', 'w') 
+	#debugFile = open('/www/default/docs/twitterApp/debug/' + str(screenName) + '.txt', 'w') 
 	debugFile.write(html + '\n\n\n\n\n')
 
