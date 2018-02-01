@@ -101,6 +101,7 @@ Variables that might need to be reviewed if the directory structure changes:
 ```
 File: twitterApp.cgi	Variables: keyToFile
 				   jsonFileName
+				   
 File: generateGraphs.py Variables: debugFile
 ```
 
@@ -110,6 +111,7 @@ File: twitterApp.cgi	Variables: request_token_url
 				   authorization_url
 				   access_token_url 
 				   settings_url
+				   
 File: collectTweets.py	Variables: tweets_url
 ``` 
 
